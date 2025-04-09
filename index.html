@@ -224,14 +224,17 @@
 
     function calculateCables() {
       let cableParts = [];
-      
-      // 결제존에서 프론트 선택 시 RJ9 1EA
-      const payFront = document.getElementById('pay_front').value;
-      if (parseInt(payFront) > 0) {
-        cableParts.push('RJ9 1EA');
+
+      // 결제존에서 포스기 선택 시 부자재 추가 (수량에 맞춰)
+      const payPos = document.getElementById('pay_pos').value;
+      if (parseInt(payPos) > 0) {
+        cableParts.push(`C타입 충전기 ${payPos}EA`);
+        cableParts.push(`C타입 케이블 ${payPos}EA`);
+        cableParts.push(`LAN Cable ${payPos}EA`);
+        cableParts.push(`RS232 ${payPos}EA`);
       }
 
-      // 미니키오스크에서 프론트 선택 시 C타입 케이블 1EA
+      // 미니키오스크에서 프론트 선택 시 C타입 케이블 추가 (수량에 맞춰)
       const miniKioskFront = document.getElementById('minikiosk_front').value;
       if (parseInt(miniKioskFront) > 0) {
         cableParts.push(`C타입 케이블 ${miniKioskFront}EA`);
