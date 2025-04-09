@@ -90,7 +90,7 @@
       padding-left: 16px;
       font-weight: 500;
     }
-    #summary, #cable-summary {
+    #summary, #cable-summary, #output-summary {
       background-color: #fff;
       border: 1px solid #cbd5e1;
       padding: 20px;
@@ -98,7 +98,7 @@
       border-radius: 12px;
       white-space: pre-line;
     }
-    #summary h4, #cable-summary h4 {
+    #summary h4, #cable-summary h4, #output-summary h4 {
       margin-bottom: 12px;
       color: #1e40af;
     }
@@ -145,7 +145,6 @@
         <div class="form-group"><label>DAOU-9300:</label><input type="number" id="pay_daou" value="0"></div>
         <div class="zone-summary" id="summary-pay">결제존 요약: 없음</div>
       </div>
-
       <div id="order" class="tab-content">
         <h3>오더존 구성</h3>
         <div class="form-group"><label>포스기:</label><input type="number" id="order_pos" value="0"></div>
@@ -155,7 +154,6 @@
         <div class="form-group"><label>토스프린터:</label><input type="number" id="order_printer3" value="0"></div>
         <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
       </div>
-
       <div id="kiosk" class="tab-content">
         <h3>대형키오스크존 구성</h3>
         <div class="form-group"><label>키오스크 D타입:</label><input type="number" id="kiosk_D" value="0"></div>
@@ -166,7 +164,6 @@
         <div class="form-group"><label>스탠드:</label><input type="number" id="kiosk_stand" value="0"></div>
         <div class="zone-summary" id="summary-kiosk">키오스크존 요약: 없음</div>
       </div>
-
       <div id="minikiosk" class="tab-content">
         <h3>미니키오스크존 구성</h3>
         <div class="form-group"><label>프론트:</label><input type="number" id="minikiosk_front" value="0"></div>
@@ -175,24 +172,24 @@
         <div class="form-group"><label>토스프린터:</label><input type="number" id="minikiosk_printer3" value="0"></div>
         <div class="zone-summary" id="summary-minikiosk">미니키오스크존 요약: 없음</div>
       </div>
-
       <div class="action-buttons">
         <button onclick="generateSummary()">장비선택</button>
         <button onclick="resetAll()">리셋</button>
       </div>
-
       <div id="summary">
         <h4>장비 종류</h4>
         <div id="summary-content">장비가 선택되지 않았습니다.</div>
       </div>
-
       <div id="cable-summary">
         <h4>부자재 종류</h4>
         <div id="cable-summary-content">아직 계산된 케이블이 없습니다.</div>
       </div>
+      <div id="output-summary">
+        <h4>출고 목록</h4>
+        <div id="output-summary-content">출고 목록이 생성되지 않았습니다.</div>
+      </div>
     </div>
   </div>
-
   <script>
     const tabs = document.querySelectorAll(".tab-btn");
     const contents = document.querySelectorAll(".tab-content");
@@ -219,28 +216,11 @@
       });
       const zoneText = parts.length ? `${label} : ${parts.join(", ")}` : `${label} : 없음`;
       document.getElementById(`summary-${prefix}`).innerText = zoneText;
-      return parts.length ? zoneText : null;
+      return parts.length ? parts : [];
     }
 
     function calculateCables() {
-      let cableParts = [];
-
-      // 결제존에서 포스기 선택 시 부자재 추가 (수량에 맞춰)
-      const payPos = document.getElementById('pay_pos').value;
-      if (parseInt(payPos) > 0) {
-        cableParts.push(`C타입 충전기 ${payPos}EA`);
-        cableParts.push(`C타입 케이블 ${payPos}EA`);
-        cableParts.push(`LAN Cable ${payPos}EA`);
-        cableParts.push(`RS232 ${payPos}EA`);
-      }
-
-      // 미니키오스크에서 프론트 선택 시 C타입 케이블 추가 (수량에 맞춰)
-      const miniKioskFront = document.getElementById('minikiosk_front').value;
-      if (parseInt(miniKioskFront) > 0) {
-        cableParts.push(`C타입 케이블 ${miniKioskFront}EA`);
-      }
-
-      document.getElementById("cable-summary-content").innerText = cableParts.length ? cableParts.join(', ') : "아직 계산된 케이블이 없습니다.";
+      document.getElementById("cable-summary-content").innerText = "(예시) 케이블 계산 로직이 여기에 들어갑니다.";
     }
 
     function generateSummary() {
@@ -250,12 +230,20 @@
         { prefix: "kiosk", label: "키오스크존" },
         { prefix: "minikiosk", label: "미니키오스크존" }
       ];
-      const results = [];
+
+      const resultLines = [];
+      const allItems = [];
+
       zones.forEach(z => {
-        const line = summarizeZone(z.prefix, z.label);
-        if (line) results.push(line);
+        const zoneItems = summarizeZone(z.prefix, z.label);
+        if (zoneItems.length) {
+          resultLines.push(`${z.label} : ${zoneItems.join(", ")}`);
+          allItems.push(...zoneItems);
+        }
       });
-      document.getElementById("summary-content").innerText = results.join("\n") || "장비가 선택되지 않았습니다.";
+
+      document.getElementById("summary-content").innerText = resultLines.join("\n") || "장비가 선택되지 않았습니다.";
+      document.getElementById("output-summary-content").innerText = allItems.length ? allItems.join("\n") : "출고 목록이 생성되지 않았습니다.";
       calculateCables();
     }
 
