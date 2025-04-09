@@ -223,7 +223,21 @@
     }
 
     function calculateCables() {
-      document.getElementById("cable-summary-content").innerText = "(예시) 케이블 계산 로직이 여기에 들어갑니다.";
+      let cableParts = [];
+      
+      // 결제존에서 프론트 선택 시 RJ9 1EA
+      const payFront = document.getElementById('pay_front').value;
+      if (parseInt(payFront) > 0) {
+        cableParts.push('RJ9 1EA');
+      }
+
+      // 미니키오스크에서 프론트 선택 시 C타입 케이블 1EA
+      const miniKioskFront = document.getElementById('minikiosk_front').value;
+      if (parseInt(miniKioskFront) > 0) {
+        cableParts.push(`C타입 케이블 ${miniKioskFront}EA`);
+      }
+
+      document.getElementById("cable-summary-content").innerText = cableParts.length ? cableParts.join(', ') : "아직 계산된 케이블이 없습니다.";
     }
 
     function generateSummary() {
