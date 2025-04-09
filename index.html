@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -130,6 +129,7 @@
       <button class="tab-btn active" data-target="pay">결제존</button>
       <button class="tab-btn" data-target="order">오더존</button>
       <button class="tab-btn" data-target="kiosk">키오스크존</button>
+      <button class="tab-btn" data-target="minikiosk">미니키오스크존</button>
     </div>
     <div class="content">
       <div id="pay" class="tab-content active">
@@ -138,7 +138,11 @@
         <div class="form-group"><label>태블릿:</label><input type="number" id="pay_tablet" value="0"></div>
         <div class="form-group"><label>프론트:</label><input type="number" id="pay_front" value="0"></div>
         <div class="form-group"><label>프린터:</label><input type="number" id="pay_printer" value="0"></div>
-        <div class="form-group"><label>CAT 단말기:</label><input type="number" id="pay_cat" value="0"></div>
+        <div class="form-group"><label>KS-1060C:</label><input type="number" id="pay_ks" value="0"></div>
+        <div class="form-group"><label>NC-8000:</label><input type="number" id="pay_nc" value="0"></div>
+        <div class="form-group"><label>KIS-1421:</label><input type="number" id="pay_kis" value="0"></div>
+        <div class="form-group"><label>MPOS-1700:</label><input type="number" id="pay_kpn" value="0"></div>
+        <div class="form-group"><label>DAOU-9300:</label><input type="number" id="pay_daou" value="0"></div>
         <div class="zone-summary" id="summary-pay">결제존 요약: 없음</div>
       </div>
 
@@ -146,41 +150,50 @@
         <h3>오더존 구성</h3>
         <div class="form-group"><label>포스기:</label><input type="number" id="order_pos" value="0"></div>
         <div class="form-group"><label>태블릿:</label><input type="number" id="order_tablet" value="0"></div>
-        <div class="form-group"><label>프론트:</label><input type="number" id="order_front" value="0"></div>
-        <div class="form-group"><label>프린터:</label><input type="number" id="order_printer" value="0"></div>
-        <div class="form-group"><label>CAT 단말기:</label><input type="number" id="order_cat" value="0"></div>
+        <div class="form-group"><label>유선프린터:</label><input type="number" id="order_printer1" value="0"></div>
+        <div class="form-group"><label>무선프린터:</label><input type="number" id="order_printer2" value="0"></div>
+        <div class="form-group"><label>토스프린터:</label><input type="number" id="order_printer3" value="0"></div>
         <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
       </div>
 
       <div id="kiosk" class="tab-content">
-        <h3>키오스크존 구성</h3>
-        <div class="form-group"><label>포스기:</label><input type="number" id="kiosk_pos" value="0"></div>
-        <div class="form-group"><label>태블릿:</label><input type="number" id="kiosk_tablet" value="0"></div>
-        <div class="form-group"><label>프론트:</label><input type="number" id="kiosk_front" value="0"></div>
-        <div class="form-group"><label>프린터:</label><input type="number" id="kiosk_printer" value="0"></div>
-        <div class="form-group"><label>CAT 단말기:</label><input type="number" id="kiosk_cat" value="0"></div>
+        <h3>대형키오스크존 구성</h3>
+        <div class="form-group"><label>키오스크 D타입:</label><input type="number" id="kiosk_D" value="0"></div>
+        <div class="form-group"><label>키오스크 E타입:</label><input type="number" id="kiosk_E" value="0"></div>
+        <div class="form-group"><label>리더기(KS):</label><input type="number" id="kiosk_ks" value="0"></div>
+        <div class="form-group"><label>리더기(NICE):</label><input type="number" id="kiosk_nice" value="0"></div>
+        <div class="form-group"><label>리더기(KPN):</label><input type="number" id="kiosk_kpn" value="0"></div>
+        <div class="form-group"><label>스탠드:</label><input type="number" id="kiosk_stand" value="0"></div>
         <div class="zone-summary" id="summary-kiosk">키오스크존 요약: 없음</div>
       </div>
 
+      <div id="minikiosk" class="tab-content">
+        <h3>미니키오스크존 구성</h3>
+        <div class="form-group"><label>프론트:</label><input type="number" id="minikiosk_front" value="0"></div>
+        <div class="form-group"><label>유선프린터:</label><input type="number" id="minikiosk_printer1" value="0"></div>
+        <div class="form-group"><label>무선프린터:</label><input type="number" id="minikiosk_printer2" value="0"></div>
+        <div class="form-group"><label>토스프린터:</label><input type="number" id="minikiosk_printer3" value="0"></div>
+        <div class="zone-summary" id="summary-minikiosk">미니키오스크존 요약: 없음</div>
+      </div>
+
       <div class="action-buttons">
-        <button onclick="generateSummary()">✅ 장비선택</button>
-        <button onclick="resetAll()">🔄 리셋</button>
+        <button onclick="generateSummary()">장비선택</button>
+        <button onclick="resetAll()">리셋</button>
       </div>
 
       <div id="summary">
-        <h4>🧾 장비선택</h4>
+        <h4>장비 종류</h4>
         <div id="summary-content">장비가 선택되지 않았습니다.</div>
       </div>
 
       <div id="cable-summary">
-        <h4>📦 필요한 케이블 수량</h4>
+        <h4>부자재 종류</h4>
         <div id="cable-summary-content">아직 계산된 케이블이 없습니다.</div>
       </div>
     </div>
   </div>
 
   <script>
-    // 탭 전환
     const tabs = document.querySelectorAll(".tab-btn");
     const contents = document.querySelectorAll(".tab-content");
     tabs.forEach(tab => {
@@ -195,7 +208,6 @@
     function summarizeZone(prefix, label) {
       const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
       const parts = [];
-
       ids.forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -205,47 +217,27 @@
           parts.push(`${name} ${value}EA`);
         }
       });
-
       const zoneText = parts.length ? `${label} : ${parts.join(", ")}` : `${label} : 없음`;
       document.getElementById(`summary-${prefix}`).innerText = zoneText;
       return parts.length ? zoneText : null;
     }
 
     function calculateCables() {
-      const allInputs = document.querySelectorAll("input[type='number']");
-      const cableSummary = {};
-
-      allInputs.forEach(input => {
-        const id = input.id;
-        const count = parseInt(input.value) || 0;
-        if (count > 0 && cableRules[id]) {
-          const rule = cableRules[id];
-          for (const [cable, qty] of Object.entries(rule)) {
-            cableSummary[cable] = (cableSummary[cable] || 0) + (qty * count);
-          }
-        }
-      });
-
-      const output = Object.entries(cableSummary)
-        .map(([cable, qty]) => `- ${cable}: ${qty}개`)
-        .join("\n");
-
-      document.getElementById("cable-summary-content").innerText = output || "아직 계산된 케이블이 없습니다.";
+      document.getElementById("cable-summary-content").innerText = "(예시) 케이블 계산 로직이 여기에 들어갑니다.";
     }
 
     function generateSummary() {
       const zones = [
         { prefix: "pay", label: "결제존" },
         { prefix: "order", label: "오더존" },
-        { prefix: "kiosk", label: "키오스크존" }
+        { prefix: "kiosk", label: "키오스크존" },
+        { prefix: "minikiosk", label: "미니키오스크존" }
       ];
-
       const results = [];
       zones.forEach(z => {
         const line = summarizeZone(z.prefix, z.label);
         if (line) results.push(line);
       });
-
       document.getElementById("summary-content").innerText = results.join("\n") || "장비가 선택되지 않았습니다.";
       calculateCables();
     }
