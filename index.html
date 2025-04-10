@@ -131,6 +131,7 @@
   </head>
   <body>
     <div class="container">
+      <!-- 좌측 사이드바 -->
       <div class="sidebar">
         <h2>장비 구역 선택</h2>
         <button class="tab-btn active" data-target="pay">결제존</button>
@@ -138,13 +139,12 @@
         <button class="tab-btn" data-target="kiosk">키오스크존</button>
         <button class="tab-btn" data-target="minikiosk">미니키오스크존</button>
       </div>
+      <!-- 우측 콘텐츠 영역 -->
       <div class="content">
-        <!-- 결제존: 숫자 입력 항목과 체크박스 항목 포함 -->
+        <!-- 결제존 탭 -->
         <div id="pay" class="tab-content active">
           <h3>결제존 구성</h3>
-          <div class="form-group"><label>포스기:</label><input type="number" id="pay_pos" value="0"></div>
-          <div class="form-group"><label>태블릿:</label><input type="number" id="pay_tablet" value="0"></div>
-          <!-- 체크박스 항목 : 여기서는 부자재 매핑 키로 사용됨 -->
+          <!-- 체크박스 항목 (장비 목록에 포함하지 않고 부자재만 처리) -->
           <div class="form-group">
             <label for="pay_sos">PC/노트북(핸드sos):</label>
             <input type="checkbox" id="pay_sos">
@@ -153,30 +153,36 @@
             <label for="pay_delivery">PC/노트북(배달영수증):</label>
             <input type="checkbox" id="pay_delivery">
           </div>
+          <div class="form-group"><label>포스기:</label><input type="number" id="pay_pos" value="0"></div>
+          <div class="form-group"><label>태블릿:</label><input type="number" id="pay_tablet" value="0"></div>
           <div class="form-group"><label>프론트:</label><input type="number" id="pay_front" value="0"></div>
-          <div class="form-group"><label>영수용 유선 프린터:</label><input type="number" id="pay_printer1" value="0"></div>
-          <div class="form-group"><label>주방용 유선 프린터:</label><input type="number" id="pay_printer2" value="0"></div>
-          <div class="form-group"><label>무선프린터:</label><input type="number" id="pay_printer3" value="0"></div>
-          <div class="form-group"><label>토스프린터:</label><input type="number" id="pay_printer4" value="0"></div>
+          <!-- 새로 추가: 유선프린터(영수용) 입력 -->
+          <div class="form-group"><label>유선프린터(영수용):</label><input type="number" id="pay_printer_y" value="0"></div>
+          <div class="form-group"><label>유선프린터(주방용):</label><input type="number" id="pay_printer_j" value="0"></div>
+          <div class="form-group"><label>무선프린터:</label><input type="number" id="pay_printer_k" value="0"></div>
+          <div class="form-group"><label>토스프린터:</label><input type="number" id="pay_printer_l" value="0"></div>
+          <!-- 결제존에서 "캣단말기"는 KS-1060C, NC-8000, KIS-1421, MPOS-1700, DAOU-9300 로 집계 -->
           <div class="form-group"><label>KS-1060C:</label><input type="number" id="pay_ks" value="0"></div>
           <div class="form-group"><label>NC-8000:</label><input type="number" id="pay_nc" value="0"></div>
           <div class="form-group"><label>KIS-1421:</label><input type="number" id="pay_kis" value="0"></div>
           <div class="form-group"><label>MPOS-1700:</label><input type="number" id="pay_kpn" value="0"></div>
           <div class="form-group"><label>DAOU-9300:</label><input type="number" id="pay_daou" value="0"></div>
+          <div class="form-group"><label>프린터:</label><input type="number" id="pay_printer" value="0"></div>
           <div class="zone-summary" id="summary-pay">결제존 요약: 없음</div>
           <div class="zone-summary" id="accessories-pay">결제존 부자재: 없음</div>
         </div>
-        <!-- 오더존 -->
+        <!-- 오더존 탭 -->
         <div id="order" class="tab-content">
           <h3>오더존 구성</h3>
           <div class="form-group"><label>포스기:</label><input type="number" id="order_pos" value="0"></div>
-          <div class="form-group"><label>태블릿 (유선프린터 X):</label><input type="number" id="order_tablet" value="0"></div>
+          <div class="form-group"><label>태블릿:</label><input type="number" id="order_tablet" value="0"></div>
           <div class="form-group"><label>유선프린터:</label><input type="number" id="order_printer1" value="0"></div>
           <div class="form-group"><label>무선프린터:</label><input type="number" id="order_printer2" value="0"></div>
+          <div class="form-group"><label>토스프린터:</label><input type="number" id="order_printer3" value="0"></div>
           <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
           <div class="zone-summary" id="accessories-order">오더존 부자재: 없음</div>
         </div>
-        <!-- 키오스크존 -->
+        <!-- 키오스크존 탭 -->
         <div id="kiosk" class="tab-content">
           <h3>대형키오스크존 구성</h3>
           <div class="form-group"><label>키오스크 D타입:</label><input type="number" id="kiosk_D" value="0"></div>
@@ -188,7 +194,7 @@
           <div class="zone-summary" id="summary-kiosk">키오스크존 요약: 없음</div>
           <div class="zone-summary" id="accessories-kiosk">키오스크존 부자재: 없음</div>
         </div>
-        <!-- 미니키오스크존 -->
+        <!-- 미니키오스크존 탭 -->
         <div id="minikiosk" class="tab-content">
           <h3>미니키오스크존 구성</h3>
           <div class="form-group"><label>프론트:</label><input type="number" id="minikiosk_front" value="0"></div>
@@ -198,6 +204,7 @@
           <div class="zone-summary" id="summary-minikiosk">미니키오스크존 요약: 없음</div>
           <div class="zone-summary" id="accessories-minikiosk">미니키오스크존 부자재: 없음</div>
         </div>
+        <!-- 버튼 및 출력 영역 -->
         <div class="action-buttons">
           <button onclick="generateSummary()">장비선택</button>
           <button onclick="resetAll()">리셋</button>
@@ -217,10 +224,9 @@
       </div>
     </div>
     <script>
-      // 각 탭 전환 처리
+      // 탭 전환 처리
       const tabs = document.querySelectorAll(".tab-btn");
       const contents = document.querySelectorAll(".tab-content");
-      
       tabs.forEach(tab => {
         tab.addEventListener("click", () => {
           tabs.forEach(t => t.classList.remove("active"));
@@ -230,26 +236,22 @@
         });
       });
       
-      // 부자재 매핑: 각 존별 매핑 객체
+      // 부자재 매핑: 각 존별 매핑 객체 (기본 매핑)
       const accessoryMapping = {
         "pay": {
           "포스기": "랜선, RJ9 to RS232",
           "태블릿": "",
-          "PC/노트북(핸드sos)": "USB to RS232, BRD케이블, 프린터 연결 젠더(주황)",
-          "PC/노트북(유선프린터 사용시)": "USB A-B",
-          "PC/노트북(배달영수증)": "USB to RS232, BRD케이블",
-          "영수용 유선 프린터": "RJ9 to RS232, 프린터 연결 젠더(주황)",
-          "주방용 유선 프린터": "",
+          "프론트": "",
+          "유선프린터(영수용)": "프린터 연결 젠더(주황)",
+          "유선프린터(주방용)": "",
           "무선프린터": "",
           "토스프린터": "",
-          "프론트": "",
-          "터미널": "",
-          "터미널(포스 미사용)": "RJ9 to RJ9",
           "KS-1060C": "랜선, 프린터 연결 젠더(주황), Y자 BRD, 캣프선",
           "NC-8000": "랜선, 캣프선",
           "KIS-1421": "랜선, 캣프선",
           "MPOS-1700": "랜선, 캣프선",
           "DAOU-9300": "랜선, 캣프선"
+          // 나머지 항목은 추가 조건으로 처리됨
         },
         "order": {
           "포스기": "랜선",
@@ -274,7 +276,7 @@
         }
       };
       
-      // 각 구역의 선택된 장비와 부자재 요약 함수
+      // 각 구역의 선택된 장비 및 부자재 요약 함수
       function summarizeZone(prefix, label, isForSummary) {
         const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
         const parts = [];
@@ -285,11 +287,11 @@
           const el = document.getElementById(id);
           if (!el) return;
           
-          // 체크박스 처리 (결제존에서만 해당)
+          // 체크박스 항목 처리 (결제존에서만 해당)
           if (el.type === "checkbox") {
             const name = el.previousElementSibling.textContent.replace(":", "").trim();
             if (el.checked) {
-              // 해당 체크박스는 장비 목록에는 포함하지 않고, 부자재로만 처리
+              // 체크박스는 장비 목록에 포함하지 않고, 매핑된 부자재만 추가
               if (mapping[name] && mapping[name].trim() !== "") {
                 const accItems = mapping[name].split(",");
                 accItems.forEach(item => {
@@ -299,7 +301,7 @@
               }
             }
           }
-          // 숫자 입력 처리
+          // 숫자 입력 항목 처리
           else if (el.type === "number") {
             const value = parseInt(el.value);
             if (value > 0) {
@@ -315,6 +317,31 @@
             }
           }
         });
+      
+        // 추가 조건 (결제존 전용)
+        if (prefix === "pay") {
+          // 추가 조건 1: 포스기와 '캣단말기' (캣단말기로 간주: KS-1060C, NC-8000, KIS-1421, MPOS-1700, DAOU-9300)
+          const posVal = parseInt(document.getElementById("pay_pos").value) || 0;
+          const ksVal = parseInt(document.getElementById("pay_ks").value) || 0;
+          const ncVal = parseInt(document.getElementById("pay_nc").value) || 0;
+          const kisVal = parseInt(document.getElementById("pay_kis").value) || 0;
+          const kpnVal = parseInt(document.getElementById("pay_kpn").value) || 0;
+          const daouVal = parseInt(document.getElementById("pay_daou").value) || 0;
+          const catSum = ksVal + ncVal + kisVal + kpnVal + daouVal;
+          if (posVal > 0 && catSum > 0) {
+            const n = Math.floor((posVal + catSum) / 2);
+            accessories.push({ name: "BRD케이블", count: n });
+          }
+      
+          // 추가 조건 2: 태블릿, 프론트, 유선프린터(영수용)
+          const tabletVal = parseInt(document.getElementById("pay_tablet").value) || 0;
+          const frontVal = parseInt(document.getElementById("pay_front").value) || 0;
+          const printerYVal = parseInt(document.getElementById("pay_printer_y").value) || 0;
+          if (tabletVal > 0 && frontVal > 0 && printerYVal > 0) {
+            const n = Math.floor((tabletVal + frontVal + printerYVal) / 3);
+            accessories.push({ name: "RJ9 to RS232", count: n });
+          }
+        }
       
         const zoneText = parts.length 
           ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}` 
@@ -334,7 +361,7 @@
         }
       }
       
-      // 전체 요약 생성: 각 존별 장비 목록(개별), 전체 부자재 집계, 전체 출고 목록(장비+부자재)
+      // 전체 요약 생성 함수: 각 존별 장비 목록(존별), 전체 부자재 집계, 전체 출고 목록(장비+부자재)
       function generateSummary() {
         const zones = [
           { prefix: "pay", label: "결제존", isForSummary: true },
@@ -343,7 +370,7 @@
           { prefix: "minikiosk", label: "미니키오스크존", isForSummary: true }
         ];
       
-        // 각 존별 장비 목록 (개별 표시)
+        // 각 존별 장비 목록 (존별 표시)
         let equipmentSummary = "";
         zones.forEach(z => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
