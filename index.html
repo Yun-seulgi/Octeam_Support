@@ -177,7 +177,6 @@
           <div class="form-group"><label>태블릿:</label><input type="number" id="order_tablet" value="0"></div>
           <div class="form-group"><label>유선프린터:</label><input type="number" id="order_printer1" value="0"></div>
           <div class="form-group"><label>무선프린터:</label><input type="number" id="order_printer2" value="0"></div>
-          <div class="form-group"><label>토스프린터:</label><input type="number" id="order_printer3" value="0"></div>
           <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
           <div class="zone-summary" id="accessories-order">오더존 부자재: 없음</div>
         </div>
@@ -213,12 +212,12 @@
           <div id="summary-content">장비가 선택되지 않았습니다.</div>
         </div>
         <div id="cable-summary">
-          <h4>부자재 종류 (전체 집계)</h4>
+          <h4>추천 부자재 종류 (전체 집계)</h4>
           <div id="cable-summary-content">아직 계산된 부자재가 없습니다.</div>
         </div>
         <div id="output-summary">
-          <h4>출고 목록 (전체 장비+부자재)</h4>
-          <div id="output-summary-content">출고 목록이 생성되지 않았습니다.</div>
+          <h4>전체 장비+부자재</h4>
+          <div id="output-summary-content">장비가 선택되지 않았습니다.</div>
         </div>
       </div>
     </div>
@@ -416,7 +415,7 @@
         const combinedItems = [...aggregatedEquipment, ...aggregatedAccessories];
         document.getElementById("output-summary-content").innerText = combinedItems.length
           ? combinedItems.map(item => `${item.name} ${item.count}EA`).join(", ")
-          : "출고 목록이 생성되지 않았습니다.";
+          : "장비가 선택되지 않았습니다.";
       }
       
       function resetAll() {
