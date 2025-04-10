@@ -81,7 +81,6 @@
         border: 1px solid #cbd5e1;
         border-radius: 8px;
       }
-      /* 체크박스는 너비를 자동으로 설정 */
       .form-group input[type="checkbox"] {
         width: auto;
       }
@@ -140,11 +139,12 @@
         <button class="tab-btn" data-target="minikiosk">미니키오스크존</button>
       </div>
       <div class="content">
-        <!-- 결제존: 체크박스 2개 포함 -->
+        <!-- 결제존: 숫자 입력 항목과 체크박스 항목 포함 -->
         <div id="pay" class="tab-content active">
           <h3>결제존 구성</h3>
           <div class="form-group"><label>포스기:</label><input type="number" id="pay_pos" value="0"></div>
           <div class="form-group"><label>태블릿:</label><input type="number" id="pay_tablet" value="0"></div>
+          <!-- 체크박스 항목 : 여기서는 부자재 매핑 키로 사용됨 -->
           <div class="form-group">
             <label for="pay_sos">PC/노트북(핸드sos):</label>
             <input type="checkbox" id="pay_sos">
@@ -201,20 +201,21 @@
           <button onclick="resetAll()">리셋</button>
         </div>
         <div id="summary">
-          <h4>장비 종류</h4>
+          <h4>장비 종류 (존별)</h4>
           <div id="summary-content">장비가 선택되지 않았습니다.</div>
         </div>
         <div id="cable-summary">
-          <h4>부자재 종류</h4>
-          <div id="cable-summary-content">아직 계산된 케이블이 없습니다.</div>
+          <h4>부자재 종류 (전체 집계)</h4>
+          <div id="cable-summary-content">아직 계산된 부자재가 없습니다.</div>
         </div>
         <div id="output-summary">
-          <h4>출고 목록</h4>
+          <h4>출고 목록 (전체 장비+부자재)</h4>
           <div id="output-summary-content">출고 목록이 생성되지 않았습니다.</div>
         </div>
       </div>
     </div>
     <script>
+      // 각 탭 전환 처리
       const tabs = document.querySelectorAll(".tab-btn");
       const contents = document.querySelectorAll(".tab-content");
       
@@ -227,26 +228,71 @@
         });
       });
       
-      // 각 구역의 선택된 장비 및 부자재 요약하기
+      // 부자재 매핑: 각 존별 매핑 객체
+      const accessoryMapping = {
+        "pay": {
+          "포스기": "랜선, RJ9 to RS232",
+          "태블릿": "",
+          "PC/노트북(핸드sos)": "USB to RS232, BRD케이블, 프린터 연결 젠더(주황)",
+          "PC/노트북(유선프린터 사용시)": "USB A-B",
+          "PC/노트북(배달영수증)": "USB to RS232, BRD케이블",
+          "프린터": "RJ9 to RS232, 프린터 연결 젠더(주황)",
+          "무선프린터": "",
+          "토스프린터": "",
+          "프론트": "",
+          "터미널": "",
+          "터미널(포스 미사용)": "RJ9 to RJ9",
+          "KS-1060C": "랜선, 프린터 연결 젠더(주황), Y자 BRD, 캣프선",
+          "NC-8000": "랜선, 캣프선",
+          "KIS-1421": "랜선, 캣프선",
+          "MPOS-1700": "랜선, 캣프선",
+          "DAOU-9300": "랜선, 캣프선"
+        },
+        "order": {
+          "포스기": "랜선",
+          "태블릿": "",
+          "유선프린터": "",
+          "무선프린터": "",
+          "토스프린터": ""
+        },
+        "kiosk": {
+          "키오스크 D타입": "",
+          "키오스크 E타입": "",
+          "리더기(KS)": "",
+          "리더기(NICE)": "",
+          "리더기(KPN)": "",
+          "스탠드": ""
+        },
+        "minikiosk": {
+          "프론트": "",
+          "유선프린터": "RJ9 to RS232, 프린터 연결 젠더(주황)",
+          "무선프린터": "",
+          "토스프린터": "C to RJ9"
+        }
+      };
+      
+      // 각 구역의 선택된 장비와 부자재 요약 함수
       function summarizeZone(prefix, label, isForSummary) {
         const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
         const parts = [];
         let accessories = [];
+        const mapping = accessoryMapping[prefix] || {};
       
         ids.forEach(id => {
           const el = document.getElementById(id);
           if (!el) return;
           
-          // 체크박스 처리
+          // 체크박스 처리 (결제존에서만 해당)
           if (el.type === "checkbox") {
             const name = el.previousElementSibling.textContent.replace(":", "").trim();
-            // 체크되어 있으면 부자재에만 추가 (장비 목록에는 포함하지 않음)
             if (el.checked) {
-              if (prefix === "pay" && name === "PC/노트북(핸드sos)") {
-                accessories.push({ name: "usb to rs232", count: 1 });
-              }
-              if (prefix === "pay" && name === "PC/노트북(배달영수증)") {
-                accessories.push({ name: "ab 케이블", count: 1 });
+              // 해당 체크박스는 장비 목록에는 포함하지 않고, 부자재로만 처리
+              if (mapping[name] && mapping[name].trim() !== "") {
+                const accItems = mapping[name].split(",");
+                accItems.forEach(item => {
+                  const accName = item.trim();
+                  accessories.push({ name: accName, count: 1 });
+                });
               }
             }
           }
@@ -256,14 +302,12 @@
             if (value > 0) {
               const name = el.previousElementSibling.textContent.replace(":", "").trim();
               parts.push({ name: name, count: value });
-              
-              // 결제존 프론트의 경우 부자재 추가
-              if (prefix === "pay" && name === "프론트") {
-                accessories.push({ name: "RJ9", count: value });
-              }
-              // 미니키오스크존 프론트의 경우 부자재 추가
-              if (prefix === "minikiosk" && name === "프론트") {
-                accessories.push({ name: "C타입 케이블", count: value });
+              if (mapping[name] && mapping[name].trim() !== "") {
+                const accItems = mapping[name].split(",");
+                accItems.forEach(item => {
+                  const accName = item.trim();
+                  accessories.push({ name: accName, count: value });
+                });
               }
             }
           }
@@ -287,7 +331,7 @@
         }
       }
       
-      // 출고 목록 및 전체 장비/부자재 요약 생성
+      // 전체 요약 생성: 각 존별 장비 목록(개별), 전체 부자재 집계, 전체 출고 목록(장비+부자재)
       function generateSummary() {
         const zones = [
           { prefix: "pay", label: "결제존", isForSummary: true },
@@ -296,7 +340,7 @@
           { prefix: "minikiosk", label: "미니키오스크존", isForSummary: true }
         ];
       
-        // 각 존별 장비 목록 생성 (개별적으로 표시)
+        // 각 존별 장비 목록 (개별 표시)
         let equipmentSummary = "";
         zones.forEach(z => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
@@ -310,7 +354,7 @@
         });
         document.getElementById("summary-content").innerText = equipmentSummary;
       
-        // 전체 부자재는 모든 존의 부자재를 합산 (집계하여 표시)
+        // 전체 부자재 집계 (모든 존의 부자재 합산)
         let aggregatedAccessories = [];
         zones.forEach(z => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
@@ -327,7 +371,7 @@
           ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ") 
           : "부자재 종류가 없습니다.";
       
-        // 전체 출고 목록: 장비 + 부자재 (집계하여 표시)
+        // 전체 출고 목록: 장비와 부자재 모두 집계하여 한 줄로 표시
         let aggregatedEquipment = [];
         zones.forEach(z => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
@@ -347,6 +391,7 @@
       }
       
       function resetAll() {
+        // 모든 숫자 입력과 체크박스 초기화
         document.querySelectorAll("input[type='number'], input[type='checkbox']").forEach(input => {
           if (input.type === "checkbox") {
             input.checked = false;
