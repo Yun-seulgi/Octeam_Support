@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-
     <meta charset="UTF-8" />
     <title>장비별 부자재 계산기 - 장비선택 작동 버전</title>
     <style>
@@ -148,12 +146,16 @@
           <h3>결제존 구성</h3>
           <!-- 체크박스 항목 (장비 목록에 포함하지 않고 부자재만 처리) -->
           <div class="form-group">
-            <label for="pay_sos">PC/노트북(핸드sos):</label>
-            <input type="checkbox" id="pay_sos">
+            <label for="pay_hand">PC/노트북(핸드sos):</label>
+            <input type="checkbox" id="pay_hand">
           </div>
           <div class="form-group">
-            <label for="pay_delivery">PC/노트북(배달영수증):</label>
-            <input type="checkbox" id="pay_delivery">
+            <label for="pay_wired">PC/노트북(유선프린터):</label>
+            <input type="checkbox" id="pay_wired">
+          </div>
+          <div class="form-group">
+            <label for="pay_terminal">PC/노트북(단말기):</label>
+            <input type="checkbox" id="pay_terminal">
           </div>
           <div class="form-group"><label>포스기:</label><input type="number" id="pay_pos" value="0"></div>
           <div class="form-group"><label>태블릿:</label><input type="number" id="pay_tablet" value="0"></div>
@@ -179,6 +181,7 @@
           <div class="form-group"><label>태블릿:</label><input type="number" id="order_tablet" value="0"></div>
           <div class="form-group"><label>유선프린터:</label><input type="number" id="order_printer1" value="0"></div>
           <div class="form-group"><label>무선프린터:</label><input type="number" id="order_printer2" value="0"></div>
+          <div class="form-group"><label>토스프린터:</label><input type="number" id="order_printer3" value="0"></div>
           <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
           <div class="zone-summary" id="accessories-order">오더존 부자재: 없음</div>
         </div>
@@ -210,16 +213,16 @@
           <button onclick="resetAll()">리셋</button>
         </div>
         <div id="summary">
-          <h4>존별 장비 종류</h4>
+          <h4>장비 종류 (존별)</h4>
           <div id="summary-content">장비가 선택되지 않았습니다.</div>
         </div>
         <div id="cable-summary">
-          <h4>부자재 전체 집계</h4>
+          <h4>부자재 종류 (전체 집계)</h4>
           <div id="cable-summary-content">아직 계산된 부자재가 없습니다.</div>
         </div>
         <div id="output-summary">
-          <h4>전체 장비+부자재</h4>
-          <div id="output-summary-content">장비가 선택되지 않았습니다.</div>
+          <h4>출고 목록 (전체 장비+부자재)</h4>
+          <div id="output-summary-content">출고 목록이 생성되지 않았습니다.</div>
         </div>
       </div>
     </div>
@@ -301,6 +304,27 @@
               }
             }
           }
+          // 체크박스 항목 처리 (결제존에서만 해당)
+          if (el.type === "checkbox") {
+            const name = el.previousElementSibling.textContent.replace(":", "").trim();
+            if (el.checked) {
+              if (prefix === "pay") {
+                if (id === "pay_hand") {
+                  accessories.push({ name: "USB to RS232", count: 1 });
+                  accessories.push({ name: "BRD케이블", count: 1 });
+                  accessories.push({ name: "프린터 연결 젠더(주황)", count: 1 });
+                }
+                if (id === "pay_wired") {
+                  accessories.push({ name: "USB A-B", count: 1 });
+                }
+                if (id === "pay_terminal") {
+                  accessories.push({ name: "USB to RS232", count: 1 });
+                  accessories.push({ name: "BRD케이블", count: 1 });
+                }
+              }
+            }
+          }
+
           // 숫자 입력 항목 처리
           else if (el.type === "number") {
             const value = parseInt(el.value);
@@ -417,7 +441,7 @@
         const combinedItems = [...aggregatedEquipment, ...aggregatedAccessories];
         document.getElementById("output-summary-content").innerText = combinedItems.length
           ? combinedItems.map(item => `${item.name} ${item.count}EA`).join(", ")
-          : "장비가 선택되지 않았습니다.";
+          : "출고 목록이 생성되지 않았습니다.";
       }
       
       function resetAll() {
@@ -434,3 +458,4 @@
     </script>
   </body>
 </html>
+
