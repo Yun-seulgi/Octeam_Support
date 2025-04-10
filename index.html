@@ -134,7 +134,7 @@
       <div class="sidebar">
         <h2>장비 구역 선택</h2>
         <button class="tab-btn active" data-target="pay">결제존</button>
-        <button class="tab-btn" data-target="order">오더존/주방</button>
+        <button class="tab-btn" data-target="order">오더존</button>
         <button class="tab-btn" data-target="kiosk">키오스크존</button>
         <button class="tab-btn" data-target="minikiosk">미니키오스크존</button>
       </div>
@@ -154,7 +154,10 @@
             <input type="checkbox" id="pay_delivery">
           </div>
           <div class="form-group"><label>프론트:</label><input type="number" id="pay_front" value="0"></div>
-          <div class="form-group"><label>프린터:</label><input type="number" id="pay_printer" value="0"></div>
+          <div class="form-group"><label>영수용유선프린터:</label><input type="number" id="pay_printer" value="0"></div>
+          <div class="form-group"><label>주방용유선프린터:</label><input type="number" id="pay_printer" value="0"></div>
+          <div class="form-group"><label>무선프린터:</label><input type="number" id="pay_printer" value="0"></div>
+          <div class="form-group"><label>토스프린터:</label><input type="number" id="pay_printer" value="0"></div>
           <div class="form-group"><label>KS-1060C:</label><input type="number" id="pay_ks" value="0"></div>
           <div class="form-group"><label>NC-8000:</label><input type="number" id="pay_nc" value="0"></div>
           <div class="form-group"><label>KIS-1421:</label><input type="number" id="pay_kis" value="0"></div>
@@ -165,13 +168,13 @@
         </div>
         <!-- 오더존 -->
         <div id="order" class="tab-content">
-          <h3>오더존/주방 구성</h3>
+          <h3>오더존 구성</h3>
           <div class="form-group"><label>포스기:</label><input type="number" id="order_pos" value="0"></div>
           <div class="form-group"><label>태블릿 (유선프린터 X):</label><input type="number" id="order_tablet" value="0"></div>
           <div class="form-group"><label>유선프린터:</label><input type="number" id="order_printer1" value="0"></div>
           <div class="form-group"><label>무선프린터:</label><input type="number" id="order_printer2" value="0"></div>
-          <div class="zone-summary" id="summary-order">오더존/주방 요약: 없음</div>
-          <div class="zone-summary" id="accessories-order">오더존/주방 부자재: 없음</div>
+          <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
+          <div class="zone-summary" id="accessories-order">오더존 부자재: 없음</div>
         </div>
         <!-- 키오스크존 -->
         <div id="kiosk" class="tab-content">
