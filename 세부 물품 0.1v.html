@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>장비별 부자재 계산기 - 장비선택 작동 버전</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap');
+      body {
+        font-family: 'Pretendard', sans-serif;
+        margin: 0;
+        background-color: #f0f4f9;
+        color: #1f2937;
+      }
+      .container {
+        display: flex;
+        height: 100vh;
+      }
+      .sidebar {
+        width: 240px;
+        background-color: #f9fafb;
+        border-right: 1px solid #e5e7eb;
+        padding: 20px;
+      }
+      .sidebar h2 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #6b7280;
+      }
+      .tab-btn {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 12px 16px;
+        margin-bottom: 8px;
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .tab-btn:hover {
+        background-color: #eff6ff;
+      }
+      .tab-btn.active {
+        border-color: #3b82f6;
+        background-color: #dbeafe;
+        color: #1d4ed8;
+      }
+      .content {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      /* 헤더 스타일 */
+      h3 {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 16px;
+        margin-top: 0;
+        min-height: 40px;
+      }
+      h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 12px;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        width: 350px;
+        font-weight: 500;
+      }
+      .form-group input {
+        padding: 10px;
+        font-size: 1rem;
+        width: 100px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+      }
+      .form-group input[type="checkbox"] {
+        width: auto;
+      }
+      .zone-summary {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #fff;
+        border-left: 4px solid #2563eb;
+        border-radius: 8px;
+        padding-left: 16px;
+        font-weight: 500;
+      }
+      #summary,
+      #cable-summary,
+      #output-summary {
+        background-color: #fff;
+        border: 1px solid #cbd5e1;
+        padding: 20px;
+        margin-top: 24px;
+        border-radius: 12px;
+        white-space: pre-line;
+      }
+      #summary h4,
+      #cable-summary h4,
+      #output-summary h4 {
+        margin-bottom: 12px;
+        color: #1e40af;
+      }
+      .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 12px;
+      }
+      .action-buttons button {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .action-buttons button:hover {
+        background-color: #2563eb;
+      }
+      /* 결제존 탭 내부 flex 컨테이너: 좌측(결제존 구성) / 우측(pc/노트북 구성) */
+      .flex-container {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .left-col,
+      .right-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 좌측 사이드바 -->
+      <div class="sidebar">
+        <h2>장비 구역 선택</h2>
+        <button class="tab-btn active" data-target="pay">결제존</button>
+        <button class="tab-btn" data-target="order">오더존</button>
+        <button class="tab-btn" data-target="kiosk">키오스크존</button>
+        <button class="tab-btn" data-target="minikiosk">미니키오스크존</button>
+      </div>
+      <!-- 우측 콘텐츠 영역 -->
+      <div class="content">
+        <!-- 결제존 탭 -->
+        <div id="pay" class="tab-content active">
+          <div class="flex-container">
+            <!-- 왼쪽 컬럼: 결제존 구성 -->
+            <div class="left-col">
+              <h3>결제존 구성</h3>
+              <div class="form-group">
+                <label>포스기:</label>
+                <input type="number" id="pay_pos" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>태블릿:</label>
+                <input type="number" id="pay_tablet" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>프론트(W):</label>
+                <input type="number" id="pay_front_w" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>프론트(B):</label>
+                <input type="number" id="pay_front_b" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>TS-200(W)(영수용):</label>
+                <input type="number" id="pay_printer_200w" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>TS-200(B)(영수용):</label>
+                <input type="number" id="pay_printer_200b" value="0" onchange="generateSummary()">
+              </div>
+                 <div class="form-group">
+                <label>TS-200(B)(주방용):</label>
+                <input type="number" id="pay_printer_200b" value="0" onchange="generateSummary()">
+              </div>
+
+              <div class="form-group">
+                <label>TS-400프린터:</label>
+                <input type="number" id="pay_printer_400" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>토스프린터:</label>
+                <input type="number" id="pay_printer_toss" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>KS-1060C:</label>
+                <input type="number" id="pay_ks" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>NC-8000:</label>
+                <input type="number" id="pay_nc" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>KIS-1421:</label>
+                <input type="number" id="pay_kis" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>MPOS-1700:</label>
+                <input type="number" id="pay_kpn" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>DAOU-9300:</label>
+                <input type="number" id="pay_daou" value="0" onchange="generateSummary()">
+              </div>
+            </div>
+            <!-- 오른쪽 컬럼: pc/노트북 구성 -->
+            <div class="right-col">
+              <h3>pc/노트북 구성</h3>
+              <h4>&lt;핸드sos, 통통통 등 CRM사용 시&gt;</h4>
+              <div class="form-group">
+                <label for="pay_hand">PC/노트북+프론트+캣단말기:</label>
+                <input type="checkbox" id="pay_hand" onchange="generateSummary()">
+              </div>
+              <h4>&lt;배달3사 사용 시&gt;</h4>
+              <div class="form-group">
+                <label for="pay_del">PC/노트북+프론트+캣단말기:</label>
+                <input type="checkbox" id="pay_del" onchange="generateSummary()">
+              </div>
+            </div>
+          </div>
+          <div class="zone-summary" id="summary-pay">결제존 요약: 없음</div>
+          <div class="zone-summary" id="accessories-pay">결제존 부자재: 없음</div>
+        </div>
+        
+        <!-- 오더존 탭 -->
+        <div id="order" class="tab-content">
+          <h3>오더존 구성</h3>
+          <div class="form-group">
+            <label>포스기:</label>
+            <input type="number" id="order_pos" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>태블릿:</label>
+            <input type="number" id="order_tablet" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>TS-200(W):</label>
+            <input type="number" id="order_printer_200w" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>TS-200(B):</label>
+            <input type="number" id="order_printer_200b" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>TS-400:</label>
+            <input type="number" id="order_printer_400" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>토스프린터:</label>
+            <input type="number" id="order_printer_toss" value="0" onchange="generateSummary()">
+          </div>
+          <div class="zone-summary" id="summary-order">오더존 요약: 없음</div>
+          <div class="zone-summary" id="accessories-order">오더존 부자재: 없음</div>
+        </div>
+        
+        <!-- 키오스크존 탭 (새로운 항목으로 교체) -->
+        <div id="kiosk" class="tab-content">
+          <h3>키오스크존 구성</h3>
+          <!-- &lt;키오스크&gt; 그룹 -->
+          <h4>&lt;키오스크&gt;</h4>
+          <div class="form-group">
+            <label>IMU KIOSK D(KOVAN, KIS, DAOU)타입 스탠드형:</label>
+            <input type="number" id="kiosk_D_stand" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK D(KOVAN, KIS, DAOU)타입 데스크형:</label>
+            <input type="number" id="kiosk_D_desk" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK E(NICE)타입 스탠드형:</label>
+            <input type="number" id="kiosk_E_stand" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK E(NICE)타입 데스크형:</label>
+            <input type="number" id="kiosk_E_desk" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK G(KSNET)타입 스탠드형:</label>
+            <input type="number" id="kiosk_G_stand" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK G(KSNET)타입 데스크형:</label>
+            <input type="number" id="kiosk_G_desk" value="0" onchange="generateSummary()">
+          </div>
+          
+          <!-- &lt;리더기&gt; 그룹 -->
+          <h4>&lt;리더기&gt;</h4>
+          <div class="form-group">
+            <label>SPD-800 (KOVAN) (D타입):</label>
+            <input type="number" id="kiosk_leader1" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>SP420QN (KIS) (D타입):</label>
+            <input type="number" id="kiosk_leader2" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>DD-MP2000 (DAOU) (D타입):</label>
+            <input type="number" id="kiosk_leader3" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>NK-2500QN (NICE) (E타입):</label>
+            <input type="number" id="kiosk_leader4" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>KSP-S8 (KSNET) (G타입):</label>
+            <input type="number" id="kiosk_leader5" value="0" onchange="generateSummary()">
+          </div>
+          <div class="zone-summary" id="summary-kiosk">키오스크존 요약: 없음</div>
+          <div class="zone-summary" id="accessories-kiosk">키오스크존 부자재: 없음</div>
+        </div>
+        
+        <!-- 미니키오스크존 탭 -->
+        <div id="minikiosk" class="tab-content">
+          <h3>미니키오스크존 구성</h3>
+          <div class="form-group">
+            <label>프론트(W):</label>
+            <input type="number" id="minikiosk_front_w" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>프론트(B):</label>
+            <input type="number" id="minikiosk_front_b" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>TS-200(W):</label>
+            <input type="number" id="minikiosk_printer_200w" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>TS-200(B):</label>
+            <input type="number" id="minikiosk_printer_200b" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>TS-400:</label>
+            <input type="number" id="minikiosk_printer_400" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>토스프린터:</label>
+            <input type="number" id="minikiosk_printer_toss" value="0" onchange="generateSummary()">
+          </div>
+          <div class="zone-summary" id="summary-minikiosk">미니키오스크존 요약: 없음</div>
+          <div class="zone-summary" id="accessories-minikiosk">미니키오스크존 부자재: 없음</div>
+        </div>
+        
+        <!-- 버튼 및 출력 영역 -->
+        <div class="action-buttons">
+          <button onclick="generateSummary()">장비선택</button>
+          <button onclick="resetAll()">리셋</button>
+        </div>
+        <div id="summary">
+          <h4>장비 종류 (존별)</h4>
+          <div id="summary-content">장비가 선택되지 않았습니다.</div>
+        </div>
+        <div id="cable-summary">
+          <h4>부자재 종류 (전체 집계)</h4>
+          <div id="cable-summary-content">아직 계산된 부자재가 없습니다.</div>
+        </div>
+        <div id="output-summary">
+          <h4>출고 목록 (전체 장비+부자재)</h4>
+          <div id="output-summary-content">출고 목록이 생성되지 않았습니다.</div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // 탭 전환 처리: 탭 클릭 시 활성화하고 최신 요약 업데이트
+      const tabs = document.querySelectorAll(".tab-btn");
+      const contents = document.querySelectorAll(".tab-content");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          tabs.forEach(t => t.classList.remove("active"));
+          contents.forEach(c => c.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById(tab.dataset.target).classList.add("active");
+          generateSummary();
+        });
+      });
+      
+      // 부자재 매핑: 각 존별 (필요 시 부자재를 추가로 매핑)
+      const accessoryMapping = {
+        "pay": {
+          "포스기": "랜선, RJ9 to RS232",
+          "태블릿": "",
+          "프론트(W)": "용지5봉",
+          "프론트(B)": "용지5봉",
+          "TS-200(W)(영수용)": "프린터 연결 젠더(주황)",
+          "TS-200(B)(영수용)": "프린터 연결 젠더(주황)",
+          "TS-200(W)(주방용)": "",
+          "TS-200(B)(주방용)": "",
+          "TS-400프린터": "",
+          "토스프린터": "",
+          "KS-1060C": "랜선, 캣프선, Y 케이블",
+          "NC-8000": "랜선, 캣프선",
+          "KIS-1421": "랜선, 캣프선",
+          "MPOS-1700": "랜선, 캣프선",
+          "DAOU-9300": "랜선, 캣프선"
+        },
+        "order": {
+          "포스기": "랜선",
+          "태블릿": "",
+          "TS-200(W)": "",
+          "TS-200(B)": "",
+          "TS-400": "",
+          "토스프린터": ""
+        },
+        "kiosk": {
+          "IMU KIOSK D(KOVAN, KIS, DAOU)타입 스탠드형": "",
+          "IMU KIOSK D(KOVAN, KIS, DAOU)타입 데스크형": "",
+          "IMU KIOSK E(NICE)타입 스탠드형": "",
+          "IMU KIOSK E(NICE)타입 데스크형": "",
+          "IMU KIOSK G(KSNET)타입 스탠드형": "",
+          "IMU KIOSK G(KSNET)타입 데스크형": "",
+          "SPD-800 (KOVAN) (D타입)": "",
+          "SP420QN (KIS) (D타입)": "",
+          "DD-MP2000 (DAOU) (D타입)": "",
+          "NK-2500QN (NICE) (E타입)": "",
+          "KSP-S8 (KSNET) (G타입)": ""
+        },
+        "minikiosk": {
+          "프론트": "용지5봉",
+          "TS-200(W)": "프린터 연결 젠더(주황), RJ9 to RS232",
+          "TS-200(B)": "프린터 연결 젠더(주황), RJ9 to RS232",
+          "TS-400": "",
+          "토스프린터": "C to RJ9"
+        }
+      };
+      
+      // 각 구역의 선택된 장비 및 부자재 요약 함수
+      function summarizeZone(prefix, label, isForSummary) {
+        const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
+        const parts = [];
+        let accessories = [];
+        const mapping = accessoryMapping[prefix] || {};
+      
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+      
+          if (el.type === "checkbox" && prefix === "pay") {
+            if (id === "pay_hand" && el.checked) {
+              accessories.push({ name: "USB to RS232", count: 1 });
+              accessories.push({ name: "BRD케이블", count: 1 });
+            }
+            if (id === "pay_del" && el.checked) {
+              accessories.push({ name: "USB to RS232", count: 1 });
+            }
+          } else if (el.type === "number") {
+            const value = parseInt(el.value);
+            if (value > 0) {
+              const name = el.previousElementSibling.textContent.replace(":", "").trim();
+              parts.push({ name: name, count: value });
+              if (mapping[name] && mapping[name].trim() !== "") {
+                const accItems = mapping[name].split(",");
+                accItems.forEach(item => {
+                  const accName = item.trim();
+                  accessories.push({ name: accName, count: value });
+                });
+              }
+            }
+          }
+        });
+      
+        if (prefix === "pay") {
+          const posVal = parseInt(document.getElementById("pay_pos").value) || 0;
+          const ncVal = parseInt(document.getElementById("pay_nc").value) || 0;
+          const kisVal = parseInt(document.getElementById("pay_kis").value) || 0;
+          const kpnVal = parseInt(document.getElementById("pay_kpn").value) || 0;
+          const daouVal = parseInt(document.getElementById("pay_daou").value) || 0;
+          const catSum = ncVal + kisVal + kpnVal + daouVal;
+          if (posVal > 0 && catSum > 0) {
+            const n = Math.floor((posVal + catSum) / 2);
+            accessories.push({ name: "BRD케이블", count: n });
+          }
+          const tabletVal = parseInt(document.getElementById("pay_tablet").value) || 0;
+          const frontVal = parseInt(document.getElementById("pay_front_w").value) || 0;
+          const printerYVal = parseInt(document.getElementById("pay_printer_200w").value) || 0;
+          if (tabletVal > 0 && frontVal > 0 && printerYVal > 0) {
+            const n = Math.floor((tabletVal + frontVal + printerYVal) / 3);
+            accessories.push({ name: "RJ9 toRS232", count: n });
+          }
+        }
+      
+        const zoneText = parts.length
+          ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}`
+          : `${label} : 없음`;
+        document.getElementById(`summary-${prefix}`).innerText = zoneText;
+      
+        if (accessories.length) {
+          document.getElementById(`accessories-${prefix}`).innerText =
+            accessories.map(item => `${item.name} ${item.count}EA`).join("\n");
+        } else {
+          document.getElementById(`accessories-${prefix}`).innerText = "부자재가 계산되지 않았습니다.";
+        }
+      
+        return isForSummary ? { parts, accessories } : [];
+      }
+      
+      function generateSummary() {
+        const zones = [
+          { prefix: "pay", label: "결제존", isForSummary: true },
+          { prefix: "order", label: "오더존", isForSummary: true },
+          { prefix: "kiosk", label: "키오스크존", isForSummary: true },
+          { prefix: "minikiosk", label: "미니키오스크존", isForSummary: true }
+        ];
+      
+        let equipmentSummary = "";
+        zones.forEach(z => {
+          const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+          equipmentSummary += `${z.label} : `;
+          equipmentSummary += zoneData.parts.length > 0 
+            ? zoneData.parts.map(item => `${item.name} ${item.count}EA`).join(", ") 
+            : "없음";
+          equipmentSummary += "\n";
+        });
+        document.getElementById("summary-content").innerText = equipmentSummary;
+      
+        let aggregatedAccessories = [];
+        zones.forEach(z => {
+          const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+          zoneData.accessories.forEach(item => {
+            const exist = aggregatedAccessories.find(acc => acc.name === item.name);
+            if (exist) {
+              exist.count += item.count;
+            } else {
+              aggregatedAccessories.push({ name: item.name, count: item.count });
+            }
+          });
+        });
+        document.getElementById("cable-summary-content").innerText =
+          aggregatedAccessories.length
+            ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ")
+            : "부자재 종류가 없습니다.";
+      
+        let aggregatedEquipment = [];
+        zones.forEach(z => {
+          const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+          zoneData.parts.forEach(item => {
+            const exist = aggregatedEquipment.find(eq => eq.name === item.name);
+            if (exist) {
+              exist.count += item.count;
+            } else {
+              aggregatedEquipment.push({ name: item.name, count: item.count });
+            }
+          });
+        });
+        const combinedItems = [...aggregatedEquipment, ...aggregatedAccessories];
+        document.getElementById("output-summary-content").innerText =
+          combinedItems.length
+            ? combinedItems.map(item => `${item.name} ${item.count}EA`).join(", ")
+            : "출고 목록이 생성되지 않았습니다.";
+      }
+      
+      function resetAll() {
+        document.querySelectorAll("input[type='number'], input[type='checkbox']").forEach(input => {
+          if (input.type === "checkbox") {
+            input.checked = false;
+          } else {
+            input.value = 0;
+          }
+        });
+        generateSummary();
+      }
+      
+      // 초기 실행
+      generateSummary();
+    </script>
+  </body>
+</html>
+
