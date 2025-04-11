@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <meta charset="UTF-8" />
     <title>장비별 부자재 계산기 - 장비선택 작동 버전</title>
     <style>
@@ -201,12 +200,8 @@
         <div id="pc" class="tab-content">
           <h3>pc/노트북 보유 존 구성</h3>
           <div class="form-group">
-            <label for="pc_hand">핸드SOS,통통통 등 CRM:</label>
+            <label for="pc_hand">배달프로그램,핸드SOS,통통통 등 CRM/캣단말기 선택 필수:</label>
             <input type="checkbox" id="pc_hand">
-          </div>
-          <div class="form-group">
-            <label for="pc_delivery">배달프로그램(배민,요기요,쿠팡):</label>
-            <input type="checkbox" id="pc_delivery">
           </div>
           <div class="form-group"><label>프론트:</label><input type="number" id="pc_front" value="0"></div>
           <div class="form-group"><label>유선프린터:</label><input type="number" id="pc_printer1" value="0"></div>
@@ -289,7 +284,7 @@
         },
         "pc": {
           "프론트": "용지5봉",
-          "유선프린터": "RJ9 to RS232, 프린터 연결 젠더(주황)",
+          "유선프린터": "",
           "무선프린터": "",
           "토스프린터": "C to RJ9",
           "KS-1060C": "랜선, 캣프선, Y 케이블",
@@ -315,30 +310,12 @@
           if (el.type === "checkbox") {
             const name = el.previousElementSibling.textContent.replace(":", "").trim();
             if (el.checked) {
-              // 결제존 체크박스 별 처리
-              if (prefix === "pay") {
-                if (id === "pay_hand") {
-                  accessories.push({ name: "USB to RS232", count: 1 });
-                  accessories.push({ name: "BRD케이블", count: 1 });
-                  accessories.push({ name: "프린터 연결 젠더(주황)", count: 1 });
-                }
-                if (id === "pay_wired") {
-                  accessories.push({ name: "USB A-B", count: 1 });
-                }
-                if (id === "pay_terminal") {
-                  accessories.push({ name: "USB to RS232", count: 1 });
-                  accessories.push({ name: "BRD케이블", count: 1 });
-                }
-              }
               // pc/노트북 보유 존 체크박스 처리
               if (prefix === "pc") {
                 if (id === "pc_hand") {
                   accessories.push({ name: "USB to RS232", count: 1 });
                   accessories.push({ name: "BRD케이블", count: 1 });
-                  accessories.push({ name: "프린터 연결 젠더(주황)", count: 1 });
-                }
-                if (id === "pc_delivery") {
-                  accessories.push({ name: "USB A-B", count: 1 });
+                                  
                 }
               }
             }
