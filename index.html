@@ -200,8 +200,12 @@
         <div id="pc" class="tab-content">
           <h3>pc/노트북 보유 존 구성</h3>
           <div class="form-group">
-            <label for="pc_hand">배달프로그램,핸드SOS,통통통 등 CRM/캣단말기 선택 필수:</label>
+            <label for="pc_hand">핸드SOS,통통통 등 CRM/캣단말기 선택 필수:</label>
             <input type="checkbox" id="pc_hand">
+          </div>
+          <div class="form-group">
+            <label for="pc_del">배달프로그램 사용:</label>
+            <input type="checkbox" id="pc_del">
           </div>
           <div class="form-group"><label>프론트:</label><input type="number" id="pc_front" value="0"></div>
           <div class="form-group"><label>유선프린터:</label><input type="number" id="pc_printer1" value="0"></div>
@@ -284,7 +288,7 @@
         },
         "pc": {
           "프론트": "용지5봉",
-          "유선프린터": "",
+          "유선프린터": "USB to RS232",
           "무선프린터": "",
           "토스프린터": "C to RJ9",
           "KS-1060C": "랜선, 캣프선, Y 케이블",
@@ -306,18 +310,14 @@
           const el = document.getElementById(id);
           if (!el) return;
       
-          // 체크박스 항목 처리
-          if (el.type === "checkbox") {
-            const name = el.previousElementSibling.textContent.replace(":", "").trim();
-            if (el.checked) {
-              // pc/노트북 보유 존 체크박스 처리
-              if (prefix === "pc") {
-                if (id === "pc_hand") {
-                  accessories.push({ name: "USB to RS232", count: 1 });
-                  accessories.push({ name: "BRD케이블", count: 1 });
-                                  
-                }
-              }
+          // 체크박스 항목 처리 (pc 존만)
+          if (el.type === "checkbox" && prefix === "pc") {
+            if (id === "pc_hand" && el.checked) {
+              accessories.push({ name: "USB to RS232", count: 1 });
+              accessories.push({ name: "BRD케이블", count: 1 });
+            }
+            if (id === "pc_del" && el.checked) {
+              accessories.push({ name: "USB to RS232", count: 1 });
             }
           }
           // 숫자 입력 항목 처리
@@ -342,7 +342,6 @@
           // 추가 조건 1: 포스기와 캣단말기로 간주되는 항목들 
           // (캣단말기로 간주되는 항목: NC-8000, KIS-1421, MPOS-1700, DAOU-9300) → KS-1060C 제외
           const posVal = parseInt(document.getElementById("pay_pos").value) || 0;
-          // KS-1060C 제외: 남은 항목들
           const ncVal = parseInt(document.getElementById("pay_nc").value) || 0;
           const kisVal = parseInt(document.getElementById("pay_kis").value) || 0;
           const kpnVal = parseInt(document.getElementById("pay_kpn").value) || 0;
@@ -363,12 +362,13 @@
         }
       
         const zoneText = parts.length 
-          ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}` 
+          ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}`
           : `${label} : 없음`;
         document.getElementById(`summary-${prefix}`).innerText = zoneText;
       
         if (accessories.length) {
-          document.getElementById(`accessories-${prefix}`).innerText = accessories.map(item => `${item.name} ${item.count}EA`).join("\n");
+          document.getElementById(`accessories-${prefix}`).innerText =
+            accessories.map(item => `${item.name} ${item.count}EA`).join("\n");
         } else {
           document.getElementById(`accessories-${prefix}`).innerText = "부자재가 계산되지 않았습니다.";
         }
@@ -394,7 +394,7 @@
         let equipmentSummary = "";
         zones.forEach(z => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
-          equipmentSummary += z.label + " : ";
+          equipmentSummary += `${z.label} : `;
           if (zoneData.parts.length > 0) {
             equipmentSummary += zoneData.parts.map(item => `${item.name} ${item.count}EA`).join(", ");
           } else {
@@ -417,9 +417,10 @@
             }
           });
         });
-        document.getElementById("cable-summary-content").innerText = aggregatedAccessories.length 
-          ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ") 
-          : "부자재 종류가 없습니다.";
+        document.getElementById("cable-summary-content").innerText =
+          aggregatedAccessories.length
+            ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ")
+            : "부자재 종류가 없습니다.";
       
         // 전체 출고 목록: 장비와 부자재 모두 집계하여 한 줄로 표시
         let aggregatedEquipment = [];
@@ -435,9 +436,10 @@
           });
         });
         const combinedItems = [...aggregatedEquipment, ...aggregatedAccessories];
-        document.getElementById("output-summary-content").innerText = combinedItems.length
-          ? combinedItems.map(item => `${item.name} ${item.count}EA`).join(", ")
-          : "출고 목록이 생성되지 않았습니다.";
+        document.getElementById("output-summary-content").innerText =
+          combinedItems.length
+            ? combinedItems.map(item => `${item.name} ${item.count}EA`).join(", ")
+            : "출고 목록이 생성되지 않았습니다.";
       }
       
       function resetAll() {
