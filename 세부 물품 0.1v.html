@@ -177,13 +177,34 @@
                 <input type="number" id="pay_tablet" value="0" onchange="generateSummary()">
               </div>
               <div class="form-group">
-                <label>프론트:</label>
+                <label>프론트(W):</label>
                 <input type="number" id="pay_front_w" value="0" onchange="generateSummary()">
               </div>
-              <div class="form-group"><label>유선프린터(영수용):</label><input type="number" id="pay_printer_y" value="0"></div>
-          <div class="form-group"><label>유선프린터(주방용):</label><input type="number" id="pay_printer_j" value="0"></div>
-          <div class="form-group"><label>무선프린터:</label><input type="number" id="pay_printer_k" value="0"></div>
-          <div class="form-group"><label>토스프린터:</label><input type="number" id="pay_printer_l" value="0"></div>
+              <div class="form-group">
+                <label>프론트(B):</label>
+                <input type="number" id="pay_front_b" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>TS-200(W)(영수용):</label>
+                <input type="number" id="pay_printer_200w" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>TS-200(B)(영수용):</label>
+                <input type="number" id="pay_printer_200b" value="0" onchange="generateSummary()">
+              </div>
+                 <div class="form-group">
+                <label>TS-200(B)(주방용):</label>
+                <input type="number" id="pay_printer_200b" value="0" onchange="generateSummary()">
+              </div>
+
+              <div class="form-group">
+                <label>TS-400프린터:</label>
+                <input type="number" id="pay_printer_400" value="0" onchange="generateSummary()">
+              </div>
+              <div class="form-group">
+                <label>토스프린터:</label>
+                <input type="number" id="pay_printer_toss" value="0" onchange="generateSummary()">
+              </div>
               <div class="form-group">
                 <label>KS-1060C:</label>
                 <input type="number" id="pay_ks" value="0" onchange="generateSummary()">
@@ -261,16 +282,28 @@
           <!-- &lt;키오스크&gt; 그룹 -->
           <h4>&lt;키오스크&gt;</h4>
           <div class="form-group">
-            <label>IMU KIOSK D(KOVAN, KIS, DAOU)타입:</label>
+            <label>IMU KIOSK D(KOVAN, KIS, DAOU)타입 스탠드형:</label>
             <input type="number" id="kiosk_D_stand" value="0" onchange="generateSummary()">
           </div>
           <div class="form-group">
-            <label>IMU KIOSK E(NICE)타입:</label>
+            <label>IMU KIOSK D(KOVAN, KIS, DAOU)타입 데스크형:</label>
+            <input type="number" id="kiosk_D_desk" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK E(NICE)타입 스탠드형:</label>
             <input type="number" id="kiosk_E_stand" value="0" onchange="generateSummary()">
           </div>
           <div class="form-group">
-            <label>IMU KIOSK G(KSNET)타입:</label>
+            <label>IMU KIOSK E(NICE)타입 데스크형:</label>
+            <input type="number" id="kiosk_E_desk" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK G(KSNET)타입 스탠드형:</label>
             <input type="number" id="kiosk_G_stand" value="0" onchange="generateSummary()">
+          </div>
+          <div class="form-group">
+            <label>IMU KIOSK G(KSNET)타입 데스크형:</label>
+            <input type="number" id="kiosk_G_desk" value="0" onchange="generateSummary()">
           </div>
           
           <!-- &lt;리더기&gt; 그룹 -->
@@ -554,4 +587,3 @@
     </script>
   </body>
 </html>
-
