@@ -166,13 +166,22 @@ h4 {
   color: grey !important;
 }
 .logo {
-  font-size: 24px;         /* 로고 글씨 크기 (원하는 크기로 조정 가능) */
-  font-weight: bold;       /* 두껍게 */
-  text-align: center;      /* 가운데 정렬 */
-  margin-bottom: 20px;     /* 하단 여백 */
-  color: #0064ff;          /* 텍스트 색상 (원하는 색으로 변경 가능) */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과로 입체감을 줌 */
-  letter-spacing: 1px;      /* 글자 간격 조금 조정 */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  max-width: 120px; /* 적절한 크기로 조정 */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0064ff;
+  margin-top: 10px;
 }
       .made-by {
   position: fixed;
@@ -200,7 +209,8 @@ h4 {
     <div class="container">
       <!-- 좌측 사이드바 -->
       <div class="sidebar">
-        <div class="logo">아이샵케어<br> 장비별 부자재 헬퍼</div>
+        <img src="아샵로고.png" alt="아샵로고" />
+        <div class="logo">장비별 부자재 헬퍼</div>
         <h2>장비 구역 선택</h2>
         <button class="tab-btn active" data-target="pay">결제카운터</button>
         <button class="tab-btn" data-target="order">오더포스 구역</button>
