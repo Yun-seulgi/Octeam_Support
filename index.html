@@ -232,6 +232,23 @@
                 <label>DAOU-9300:</label>
                 <input type="number" id="pay_daou" value="0">
               </div>
+              <!-- 금전함 추가 -->
+              <div class="form-group">
+                <label>금전함 소형(W):</label>
+                <input type="number" id="pay_moneybox_small_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>금전함 소형(B):</label>
+                <input type="number" id="pay_moneybox_small_b" value="0">
+              </div>
+              <div class="form-group">
+                <label>금전함 대형(W):</label>
+                <input type="number" id="pay_moneybox_large_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>금전함 대형(B):</label>
+                <input type="number" id="pay_moneybox_large_b" value="0">
+              </div>
             </div>
             <!-- 오른쪽 컬럼: PC/노트북 구성 -->
             <div class="right-col">
@@ -463,6 +480,10 @@
           "KIS-1421": "랜선, 캣프선, 영수증 2봉",
           "MPOS-1700": "랜선, 캣프선, 영수증 2봉",
           "DAOU-9300": "랜선, 캣프선, 영수증 2봉",
+          "금전함 소형(W)": "",
+          "금전함 소형(B)": "",
+          "금전함 대형(W)": "",
+          "금전함 대형(B)": "",
           "영수증 2봉": ""
         },
         "order": {
@@ -653,10 +674,14 @@
         zones.forEach(z => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
           zoneData.parts.forEach(item => {
-            // 유선프린터 관련 항목은 이름을 정규화하여 합칩니다.
             let normalizedName = item.name;
+            // 유선프린터 관련 항목은 이름을 정규화하여 합칩니다.
             if (normalizedName.startsWith("유선프린터(")) {
               normalizedName = "유선프린터";
+            }
+            // 키오스크존의 장비는 괄호와 괄호 안 내용을 제거합니다.
+            if (z.prefix === "kiosk") {
+              normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "");
             }
             const exist = aggregatedEquipment.find(eq => eq.name === normalizedName);
             if (exist) {
@@ -690,7 +715,7 @@
             input.value = 0;
           }
         });
-        // 출력 영역도 초기 메시지로 초기화
+        // 각 출력 영역을 기본 메시지로 초기화
         document.getElementById("summary-content").innerText = "장비가 선택되지 않았습니다.";
         document.getElementById("cable-summary-content").innerText = "아직 계산된 부자재가 없습니다.";
         document.getElementById("output-summary-content").innerText = "출고 목록이 생성되지 않았습니다.";
@@ -701,4 +726,3 @@
     </script>
   </body>
 </html>
-
