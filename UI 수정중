@@ -163,6 +163,15 @@ h4 {
   font-style: italic;
   color: grey !important;
 }
+.logo {
+  font-size: 24px;         /* 로고 글씨 크기 (원하는 크기로 조정 가능) */
+  font-weight: bold;       /* 두껍게 */
+  text-align: center;      /* 가운데 정렬 */
+  margin-bottom: 20px;     /* 하단 여백 */
+  color: #2563eb;          /* 텍스트 색상 (원하는 색으로 변경 가능) */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과로 입체감을 줌 */
+  letter-spacing: 1px;      /* 글자 간격 조금 조정 */
+}
       /* 결제존 탭 내부 flex 컨테이너: 좌측(결제존 구성) / 우측(PC/노트북 구성) */
       .flex-container {
         display: flex;
@@ -181,7 +190,7 @@ h4 {
     <div class="container">
       <!-- 좌측 사이드바 -->
       <div class="sidebar">
-        <div class="logo">장비별 부자재 계산기</div>
+        <div class="logo">아이샵케어<br> 장비별 부자재 계산기</div>
         <h2>장비 구역 선택</h2>
         <button class="tab-btn active" data-target="pay">결제카운터</button>
         <button class="tab-btn" data-target="order">오더포스 구역</button>
