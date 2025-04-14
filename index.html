@@ -174,6 +174,14 @@ h4 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과로 입체감을 줌 */
   letter-spacing: 1px;      /* 글자 간격 조금 조정 */
 }
+      .made-by {
+  position: fixed;
+  top: 10px;
+  right: 15px;
+  font-size: 12px; /* 필요에 따라 크기 조절 */
+  color: #0064ff;   
+  z-index: 1000; /* 다른 요소 위에 보이도록 */
+}
       /* 결제존 탭 내부 flex 컨테이너: 좌측(결제존 구성) / 우측(PC/노트북 구성) */
       .flex-container {
         display: flex;
@@ -795,9 +803,9 @@ h4 {
     </script>
     
     <!-- 오른쪽 상단에 파란색 반투명 글씨로 made by OCT_내부지원 표시 (기존 코드 수정/삭제 없이 추가) -->
-    <div class="made-by" style="color: rgba(59, 130, 246, 1);">
-      made by OCT_내부지원
-    </div>
+    <div class="made-by">
+  made by OCT_내부지원
+</div>
     
   </body>
 </html>
