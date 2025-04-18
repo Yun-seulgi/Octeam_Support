@@ -756,10 +756,13 @@ h4 {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
           zoneData.parts.forEach(item => {
             let normalizedName = item.name;
-            // 유선프린터 관련 항목은 이름을 정규화하여 합칩니다.
-            if (normalizedName.startsWith("유선프린터(")) {
-              normalizedName = "유선프린터";
-            }
+		// W 프린터(영수용/주방용)를 유선프린터(W)로 통합
+		if (normalizedName.startsWith("유선프린터(W)")) {
+	  	normalizedName = "유선프린터(W)";
+		// B 프린터(영수용/주방용)를 유선프린터(B)로 통합
+		} else if (normalizedName.startsWith("유선프린터(B)")) {
+	 	 normalizedName = "유선프린터(B)";
+		}
             // 키오스크존의 장비는 괄호와 괄호 안 내용을 제거합니다.
             if (z.prefix === "kiosk") {
               normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "");
