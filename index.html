@@ -264,12 +264,20 @@ h4 {
                 <input type="number" id="pay_printer_200_b" value="0">
               </div>
               <div class="form-group">
-                <label>TS-400(블루투스)프린터:</label>
-                <input type="number" id="pay_printer_400" value="0">
+                <label>TS-400(블루투스)프린터(W):</label>
+                <input type="number" id="pay_printer_400_w" value="0">
               </div>
               <div class="form-group">
-                <label>TS-400EB(WIFI)프린터:</label>
-                <input type="number" id="pay_printer_toss" value="0">
+                <label>TS-400(블루투스)프린터(B):</label>
+                <input type="number" id="pay_printer_400_b" value="0">
+              </div>
+              <div class="form-group">
+                <label>TS-400EB(WIFI)프린터(W):</label>
+                <input type="number" id="pay_printer_toss_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>TS-400EB(WIFI)프린터(B):</label>
+                <input type="number" id="pay_printer_toss_b" value="0">
               </div>
               <!-- 추가: 결제용 기기 변경 및 추가 (왼쪽 컬럼) -->
               <div class="form-group">
@@ -315,68 +323,68 @@ h4 {
               </div>
             </div>
             <!-- 오른쪽 컬럼: PC/노트북 구성 -->
-            <div class="right-col">
-              <h3>PC/노트북 구성</h3>
-              <h4>&lt;핸드sos, 통통통 등 CRM사용 시&gt;</h4>
-              <div class="form-group">
-                <label for="pay_hand">PC/노트북+프론트+KSNET-단말기:</label>
-                <input type="checkbox" id="pay_hand1">
-              </div>
-              <div class="form-group">
-                <label for="pay_hand">PC/노트북+프론트+NICE-단말기:</label>
-                <input type="checkbox" id="pay_hand2">
-              </div>
-              <div class="form-group">
-                <label for="pay_hand">PC/노트북+프론트+KIS-단말기:</label>
-                <input type="checkbox" id="pay_hand3">
-              </div>
-              <div class="form-group">
-                <label for="pay_hand">PC/노트북+프론트+KPN-단말기:</label>
-                <input type="checkbox" id="pay_hand4">
-              </div>
-              <div class="form-group">
-                <label for="pay_hand">PC/노트북+프론트+DAOU-단말기:</label>
-                <input type="checkbox" id="pay_hand5">
-              </div>
-              <div class="form-group">
-                <label for="pay_hand">PC/노트북+프론트+KOVAN-단말기:</label>
-                <input type="checkbox" id="pay_hand6">
-              </div>
-              <h4>&lt;배달3사 사용 시&gt;</h4>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+KSNET-단말기:</label>
-                <input type="checkbox" id="pay_del1">
-              </div>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+NICE-단말기:</label>
-                <input type="checkbox" id="pay_del2">
-              </div>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+KIS-단말기:</label>
-                <input type="checkbox" id="pay_del3">
-              </div>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+KPN-단말기:</label>
-                <input type="checkbox" id="pay_del4">
-              </div>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+DAOU-단말기:</label>
-                <input type="checkbox" id="pay_del5">
-              </div>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+KOVAN-단말기:</label>
-                <input type="checkbox" id="pay_del6">
-              </div>
-              <div class="form-group">
-                <label for="pay_del">PC/노트북+프론트+유선프린터:</label>
-                <input type="checkbox" id="pay_del7">
-              </div>
-              <h4>&lt;CRM, 배달3사 미사용 시 &gt;</h4>
-              <div class="form-group">
-                <label for="pay_nope">PC/노트북+프론트+프린터:</label>
-                <input type="checkbox" id="pay_nope">
-              </div>
-            </div>
+<div class="right-col">
+    <h3>PC/노트북 구성</h3>
+    <h4>&lt;핸드sos, 통통통 등 CRM사용 시&gt;</h4>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KSNET-단말기:</label>
+        <input type="checkbox" id="pay_hand1">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+NICE-단말기:</label>
+        <input type="checkbox" id="pay_hand2">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KIS-단말기:</label>
+        <input type="checkbox" id="pay_hand3">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KPN-단말기:</label>
+        <input type="checkbox" id="pay_hand4">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+DAOU-단말기:</label>
+        <input type="checkbox" id="pay_hand5">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KOVAN-단말기:</label>
+        <input type="checkbox" id="pay_hand6">
+    </div>
+    <h4>&lt;배달3사 사용 시&gt;</h4>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KSNET-단말기:</label>
+        <input type="checkbox" id="pay_del1">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+NICE-단말기:</label>
+        <input type="checkbox" id="pay_del2">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KIS-단말기:</label>
+        <input type="checkbox" id="pay_del3">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KPN-단말기:</label>
+        <input type="checkbox" id="pay_del4">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+DAOU-단말기:</label>
+        <input type="checkbox" id="pay_del5">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KOVAN-단말기:</label>
+        <input type="checkbox" id="pay_del6">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+유선프린터:</label>
+        <input type="checkbox" id="pay_del7">
+    </div>
+    <h4>&lt;CRM, 배달3사 미사용 시 &gt;</h4>
+    <div class="form-group">
+        <label for="pay_nope">PC/노트북+프론트(W)+프린터:</label>
+        <input type="checkbox" id="pay_nope">
+    </div>
+</div>
           </div>
           <div class="zone-summary" id="summary-pay">결제용 요약: 없음</div>
           <div class="zone-summary" id="accessories-pay">결제용 부자재: 없음</div>
@@ -402,8 +410,20 @@ h4 {
             <input type="number" id="order_printer_200b" value="0">
           </div>
           <div class="form-group">
-            <label>TS-400(블루투스):</label>
-            <input type="number" id="order_printer_400" value="0">
+            <label>TS-400(블루투스)(W):</label>
+            <input type="number" id="order_printer_400_w" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400(블루투스)(B):</label>
+            <input type="number" id="order_printer_400_b" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400EB(WIFI)프린터(W):</label>
+            <input type="number" id="order_printer_toss_w" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400EB(WIFI)프린터(B):</label>
+            <input type="number" id="order_printer_toss_b" value="0">
           </div>
           <div class="zone-summary" id="summary-order">주문용 요약: 없음</div>
           <div class="zone-summary" id="accessories-order">주문용 부자재: 없음</div>
@@ -503,361 +523,412 @@ h4 {
       </div>
     </div>
     
-    <script>
-      // 탭 전환 처리: 탭 클릭 시 활성화 (탭 전환 시 요약은 자동 출력하지 않음)
-      const tabs = document.querySelectorAll(".tab-btn");
-      const contents = document.querySelectorAll(".tab-content");
-      tabs.forEach(tab => {
+<script>
+    // 탭 전환 처리: 탭 클릭 시 활성화 (탭 전환 시 요약은 자동 출력하지 않음)
+    const tabs = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(tab => {
         tab.addEventListener("click", () => {
-          tabs.forEach(t => t.classList.remove("active"));
-          contents.forEach(c => c.classList.remove("active"));
-          tab.classList.add("active");
-          document.getElementById(tab.dataset.target).classList.add("active");
-          // 탭 전환 시 자동 출력은 하지 않음.
+            tabs.forEach(t => t.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.target).classList.add("active");
+            // 탭 전환 시 자동 출력은 하지 않음.
         });
-      });
-      
-      // 부자재 매핑: 각 존별 (필요 시 부자재를 추가로 매핑)
-      const accessoryMapping = {
+    });
+
+    // 부자재 매핑: 각 존별 (필요 시 부자재를 추가로 매핑)
+    const accessoryMapping = {
         "pay": {
-          "포스기": "랜선",
-          "태블릿": "",
-          "프론트(W)": "RJ9 to RS232",
-          "프론트(B)": "RJ9 to RS232",
-          "터미널": "RJ9 to RJ9, 영수증 2봉",
-          "유선프린터(W)(영수용)": "프린터 연결 젠더(주황), 영수증 2봉",
-          "유선프린터(B)(영수용)": "프린터 연결 젠더(주황), 영수증 2봉",
-          "유선프린터(W)(주방용)": "영수증 2봉",
-          "유선프린터(B)(주방용)": "영수증 2봉",
-          "TS-400(블루투스)프린터": "영수증 2봉",
-          "TS-400EB(WIFI)프린터": "영수증 2봉",
-          "KOVAN-단말기": "랜선, 캣-프(A타입), 영수증 2봉",
-          "KSNET-단말기": "랜선, 캣-프(C타입), 프린터 연결 젠더(주황), Y자 BRD 케이블, 영수증 2봉",
-          "NICE-단말기": "랜선, 캣-프(A타입), 영수증 2봉",
-          "KIS-단말기": "랜선, 캣-프(A타입), 영수증 2봉",
-          "KPN-단말기": "랜선, 캣-프(A타입), 영수증 2봉",
-          "DAOU-단말기": "랜선, 캣-프(A타입), 영수증 2봉",
-          "금전함 소형(W)": "",
-          "금전함 소형(B)": "",
-          "금전함 대형(W)": "",
-          "금전함 대형(B)": "",
-          "영수증 2봉": ""
+            "포스기": "LAN cable, 포스기 안내 가이드",
+            "태블릿": "태블릿 거치대, 갤럭시탭 액정필름",
+            "프론트(W)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
+            "프론트(B)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
+            "터미널": "RJ9 to RJ9, 영수증 2봉",
+            "유선프린터(W)(영수용)": "CROSS GENDER, 영수증 2봉",
+            "유선프린터(B)(영수용)": "CROSS GENDER, 영수증 2봉",
+            "유선프린터(W)(주방용)": "영수증 2봉",
+            "유선프린터(B)(주방용)": "영수증 2봉",
+            "TS-400(블루투스)(W)프린터": "영수증 2봉",
+            "TS-400(블루투스)(B)프린터": "영수증 2봉",
+            "TS-400EB(WIFI)(W)프린터": "영수증 2봉",
+            "TS-400EB(WIFI)(B)프린터": "영수증 2봉",
+            "KOVAN-단말기": "LAN cable, 프론트-CAT cable(A), 영수증 2봉",
+            "KSNET-단말기": "LAN cable, 프론트-CAT cable(KSNET), CROSS GENDER, KSNET BRD(Y자), 영수증 2봉",
+            "NICE-단말기": "LAN cable, 프론트-CAT cable(A), NICE 신형 BRD, 영수증 2봉",
+            "KIS-단말기": "LAN cable, 프론트-CAT cable(A), KIS BRD, 영수증 2봉",
+            "KPN-단말기": "LAN cable, 프론트-CAT cable(A), KPN BRD, 영수증 2봉",
+            "DAOU-단말기": "LAN cable, 프론트-CAT cable(A), DAOU BRD, 영수증 2봉",
+            "금전함 소형(W)": "",
+            "금전함 소형(B)": "",
+            "금전함 대형(W)": "",
+            "금전함 대형(B)": "",
+            "영수증 2봉": ""
         },
         "order": {
-          "포스기": "랜선",
-          "태블릿": "",
-          "유선프린터(W)": "영수증 2봉",
-          "유선프린터(B)": "영수증 2봉",
-          "TS-400(블루투스)": "영수증 2봉",
-          "TS-400EB(WIFI)프린터": "영수증 2봉"
+            "포스기": "LAN cable",
+            "태블릿": "태블릿 거치대, 갤럭시탭 액정필름",
+            "유선프린터(W)": "영수증 2봉",
+            "유선프린터(B)": "영수증 2봉",
+            "TS-400(블루투스)(W)": "영수증 2봉",
+            "TS-400(블루투스)(B)": "영수증 2봉",
+            "TS-400EB(WIFI)(W)프린터": "영수증 2봉",
+            "TS-400EB(WIFI)(B)프린터": "영수증 2봉"
         },
         "kiosk": {
-          "배리어프리 IMU KIOSK D(KOVAN, KIS, DAOU, KSNET)타입 스탠드형": "랜선, 영수증 2봉",
-          "배리어프리 IMU KIOSK D(KOVAN, KIS, DAOU, KSNET)타입 데스크형": "랜선, 영수증 2봉",
-          "배리어프리 IMU KIOSK E(NICE)타입 스탠드형": "랜선, 영수증 2봉",
-          "배리어프리 IMU KIOSK E(NICE)타입 데스크형": "랜선, 영수증 2봉",
-          "SPD-800 (KOVAN) (D타입)": "",
-          "SP420QN (KIS) (D타입)": "",
-          "DD-MP2000 (DAOU) (D타입)": "",
-          "NK-2500QN (NICE) (E타입)": "",
-          "SPD-800KS (KSNET) (D타입)": ""
+            "배리어프리 IMU KIOSK D(KOVAN, KIS, DAOU, KSNET)타입 스탠드형": "LAN cable, 스탠드 받침대, 영수증 2봉",
+            "배리어프리 IMU KIOSK D(KOVAN, KIS, DAOU, KSNET)타입 데스크형": "LAN cable, 영수증 2봉",
+            "배리어프리 IMU KIOSK E(NICE)타입 스탠드형": "LAN cable, 스탠드 받침대, 영수증 2봉",
+            "배리어프리 IMU KIOSK E(NICE)타입 데스크형": "LAN cable, 영수증 2봉",
+            "SPD-800 (KOVAN) (D타입)": "",
+            "SP420QN (KIS) (D타입)": "",
+            "DD-MP2000 (DAOU) (D타입)": "",
+            "NK-2500QN (NICE) (E타입)": "",
+            "SPD-800KS (KSNET) (D타입)": ""
         },
         "minikiosk": {
-          "프론트(W)": "RJ9 to RS232",
-          "프론트(B)": "RJ9 to RS232",
-          "유선프린터(W)": "프린터 연결 젠더(주황), 영수증 2봉",
-          "유선프린터(B)": "프린터 연결 젠더(주황), RJ9 to RS232, 영수증 2봉",
-          "TS-400EB(WIFI)프린터": "C to RJ9, 영수증 2봉"
+            "프론트(W)": "RJ9 to RS232",
+            "프론트(B)": "RJ9 to RS232",
+            "유선프린터(W)": "CROSS GENDER, 영수증 2봉",
+            "유선프린터(B)": "CROSS GENDER, 영수증 2봉" // 논리 오류 가능성 있었던 부분 수정
         }
-      };
-      
-      // 각 구역의 선택된 장비 및 부자재 요약 함수
-      function summarizeZone(prefix, label, isForSummary) {
-        const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
-        const parts = [];
-        let accessories = [];
-        const mapping = accessoryMapping[prefix] || {};
-      
-        ids.forEach(id => {
-          const el = document.getElementById(id);
-          if (!el) return;
-      
-          if (el.type === "checkbox" && prefix === "pay") {
+    };
+    
+    const itemCodeMapping = {
+        // 장비 품번
+        "포스기": "POSN250",
+        "태블릿": "TABGALAXYA9W+SM014+SM058",
+        "프론트(W)": "TOSSFR02WH",
+        "프론트(B)": "TOSSFR02BK",
+        "터미널": "TOSSTR01",
+        "유선프린터(W)": "PRCPP3000WH",
+        "유선프린터(B)": "PRCPP3000BK",
+        "TS-400(블루투스)(W)프린터": "PRTS400WH",
+        "TS-400(블루투스)(B)프린터": "PRTS400BK",
+        "TS-400EB(WIFI)(W)프린터": "PRTS400WWH",
+        "TS-400EB(WIFI)(B)프린터": "PRTS400WBK",
+        "KOVAN-단말기": "품번없음", // 제공된 리스트에 KOVAN 단말기 품번이 없습니다.
+        "KSNET-단말기": "KSNETCATKS1060C",
+        "NICE-단말기": "NICECATNC8000",
+        "KIS-단말기": "KISCATKIS1421",
+        "KPN-단말기": "KPNCATMPOS1700AE",
+        "DAOU-단말기": "DAOUCATDD2300",
+        "금전함 소형(W)": "CASH330AWH",
+        "금전함 소형(B)": "CASH330ABK",
+        "금전함 대형(W)": "CASH405AWH",
+        "금전함 대형(B)": "CASH405ABK",
+        "배리어프리 IMU KIOSK E타입 스탠드형": "KIOSKT6BE+KIOSKSTAND",
+        "배리어프리 IMU KIOSK E타입 데스크형": "KIOSKT6BE",
+        "배리어프리 IMU KIOSK D타입 스탠드형": "KIOSKT6BD+KIOSKSTAND", 
+        "배리어프리 IMU KIOSK D타입 데스크형": "KIOSKT6BD",
+        "NK-2500QN": "NICEMPNK2500QN",
+        "SPD-800KS": "KSNETMPSPD800KS",
+        "SP-420QN": "KISMPSP420QN",
+        "DD-MP2000": "DAOUMPMP2000",
+        "MP-2000": "DAOUMPMP2000", // 호환성을 위해 추가
+
+        // 부자재 품번
+        "영수증 2봉": "SM049",
+        "RJ9 to RS232": "SM001",
+        "RJ9 to RJ9": "SM044",
+        "CROSS GENDER": "SM003", // '프린터 연결 젠더'를 'CROSS GENDER'로 매칭
+        "LAN cable": "SM030",
+        "프론트-CAT cable(KSNET)": "SM024",
+        "KSNET BRD(Y자)": "SM028",
+        "프론트-CAT cable(A)": "SM022",
+        "NICE 신형 BRD": "SM047",
+        "KIS BRD": "SM025",
+        "KPN BRD": "SM027",
+        "DAOU BRD": "SM046",
+        "포스기 안내 가이드": "SM045",
+        "태블릿 거치대": "SM014",
+        "갤럭시탭 액정필름": "SM058",
+        "스탠드 받침대": "KIOSKSTAND",
+        "USB to RS232": "SM008", 
+        "POP 2종 & QR & 리플렛": "SMSET", 
+        "KOVAN BRD": "품번없음", // 제공된 리스트에 품번이 없습니다.
+    };
+
+
+// 각 구역의 선택된 장비 및 부자재 요약 함수
+function summarizeZone(prefix, label, isForSummary) {
+    const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
+    const parts = [];
+    let accessories = [];
+    const mapping = accessoryMapping[prefix] || {};
+
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        if (el.type === "checkbox" && prefix === "pay") {
             // 체크박스 (PC/노트북 구성 포함, pay 구역)
             if (id === "pay_hand1" && el.checked) {
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "Y자 BRD 케이블", count: 1 });
-              accessories.push({ name: "캣-프(C타입)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KSNET-단말기", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "KSNET BRD(Y자)", count: 1 });
+                accessories.push({ name: "프론트-CAT cable(KSNET)", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KSNET-단말기", count: 1 });
             } else if (id === "pay_hand2" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "캣-프(A타입)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, NICE-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "NICE 신형 BRD", count: 1 });
+                accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "NICE-단말기", count: 1 });
             } else if (id === "pay_hand3" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "캣-프(A타입)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KIS-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KIS BRD", count: 1 });
+                accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KIS-단말기", count: 1 });
             } else if (id === "pay_hand4" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "캣-프(A타입)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KPN-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KPN BRD", count: 1 });
+                accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KPN-단말기", count: 1 });
             } else if (id === "pay_hand5" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "캣-프(A타입)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, DAOU-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "DAOU BRD", count: 1 });
+                accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "DAOU-단말기", count: 1 });
             } else if (id === "pay_hand6" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "캣-프(A타입)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KOVAN-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KOVAN BRD", count: 1 });
+                accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KOVAN-단말기", count: 1 });
             }
             // 배달3사 체크박스 처리
             else if (id === "pay_del1" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "Y자 BRD 케이블", count: 1 });
-              accessories.push({ name: "프린터 연결 젠더(주황)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KSNET-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KSNET BRD(Y자)", count: 1 });
+                accessories.push({ name: "CROSS GENDER", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KSNET-단말기", count: 1 });
             } else if (id === "pay_del2" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, NICE-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "NICE 신형 BRD", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "NICE-단말기", count: 1 });
             } else if (id === "pay_del3" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KIS-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KIS BRD", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KIS-단말기", count: 1 });
             } else if (id === "pay_del4" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KPN-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KPN BRD", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KPN-단말기", count: 1 });
             } else if (id === "pay_del5" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, DAOU-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "DAOU BRD", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "DAOU-단말기", count: 1 });
             } else if (id === "pay_del6" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "USB to RS232", count: 1 });
-              accessories.push({ name: "BRD케이블", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, KOVAN-단말기", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "USB to RS232", count: 1 });
+                accessories.push({ name: "KOVAN BRD", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "KOVAN-단말기", count: 1 });
             } else if (id === "pay_del7" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "A-B 케이블", count: 1 });
-              parts.push({ name: "프론트, 유선프린터", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "유선프린터(W)", count: 1 });
             }
             // CRM, 배달 3사 미사용 시
             else if (id === "pay_nope" && el.checked) {
-              accessories.push({ name: "RJ9 to RS232", count: 1 });
-              accessories.push({ name: "프린터 연결 젠더(주황)", count: 1 });
-              accessories.push({ name: "영수증 2봉", count: 1 });
-              parts.push({ name: "프론트, 유선프린터", count: 1 });
+                accessories.push({ name: "RJ9 to RS232", count: 1 });
+                accessories.push({ name: "CROSS GENDER", count: 1 });
+                accessories.push({ name: "영수증 2봉", count: 1 });
+                parts.push({ name: "프론트(W)", count: 1 });
+                parts.push({ name: "유선프린터(W)", count: 1 });
             }
-          } else if (el.type === "number") {
+        } else if (el.type === "number") {
             const value = parseInt(el.value);
             if (value > 0) {
-              const name = el.previousElementSibling.textContent.replace(":", "").trim();
-              parts.push({ name: name, count: value });
-              if (mapping[name] && mapping[name].trim() !== "") {
-                const accItems = mapping[name].split(",");
-                accItems.forEach(item => {
-                  const accName = item.trim();
-                  accessories.push({ name: accName, count: value });
-                });
-              }
+                const name = el.previousElementSibling.textContent.replace(":", "").trim();
+                parts.push({ name: name, count: value });
+                if (mapping[name] && mapping[name].trim() !== "") {
+                    const accItems = mapping[name].split(",");
+                    accItems.forEach(item => {
+                        const accName = item.trim();
+                        accessories.push({ name: accName, count: value });
+                    });
+                }
             }
-          }
-        });
-              
-	if (prefix === "pay") {
-  	const posVal = parseInt(document.getElementById("pay_pos").value) || 0;
- 	 const niceVal = parseInt(document.getElementById("pay_nice").value) || 0;
- 	 const kisVal = parseInt(document.getElementById("pay_kis").value) || 0;
- 	 const kpnVal = parseInt(document.getElementById("pay_kpn").value) || 0;
-	  const daouVal = parseInt(document.getElementById("pay_daou").value) || 0;
-	  const KOVANVal = parseInt(document.getElementById("pay_KOVAN").value) || 0;
-	  const catSum = niceVal + kisVal + kpnVal + daouVal + KOVANVal;
-	  if (posVal > 0 && catSum > 0) {
- 	   const calculatedN = Math.floor((posVal + catSum) / 2);
- 	   // 계산된 값과 catSum 중 작은 값을 선택하여 n의 최대값을 catSum으로 제한합니다.
- 	   const n = Math.min(calculatedN, catSum);
-	    accessories.push({ name: "BRD케이블", count: n });
-	  }
-
- 	 // 영수용 유선프린터 계산 (프론트(W)와 프론트(B)를 하나로, 유선프린터(W)(영수용)와 유선프린터(B)(영수용)도 하나로 취급)
-	  let tabletVal = parseInt(document.getElementById("pay_tablet").value) || 0;
- 	 let frontWVal = parseInt(document.getElementById("pay_front_w").value) || 0;
- 	 let frontBVal = parseInt(document.getElementById("pay_front_b").value) || 0;
- 	 let printerW_YVal = parseInt(document.getElementById("pay_printer_200w").value) || 0;
- 	 let printerB_YVal = parseInt(document.getElementById("pay_printer_200b").value) || 0;
- 	 let combinedFront = frontWVal + frontBVal;
- 	 let combinedPrinter = printerW_YVal + printerB_YVal;
- 	 if (tabletVal > 0 && combinedFront > 0 && combinedPrinter > 0) {
- 	   let n = Math.floor((tabletVal + combinedFront + combinedPrinter) / 3);
- 	   accessories.push({ name: "RJ9 to RS232", count: n });
-	  }
-	}
-
-      
-        const zoneText = parts.length
-          ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}`
-          : `${label} : 없음`;
-        document.getElementById(`summary-${prefix}`).innerText = zoneText;
-      
-        if (accessories.length) {
-          document.getElementById(`accessories-${prefix}`).innerText =
-            accessories.map(item => `${item.name} ${item.count}EA`).join("\n");
-        } else {
-          document.getElementById(`accessories-${prefix}`).innerText = "부자재가 계산되지 않았습니다.";
         }
-      
-        return isForSummary ? { parts, accessories } : [];
-      }
-      
-      function generateSummary() {
+    });
+
+
+    const zoneText = parts.length
+        ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}`
+        : `${label} : 없음`;
+    document.getElementById(`summary-${prefix}`).innerText = zoneText;
+
+    if (accessories.length) {
+        document.getElementById(`accessories-${prefix}`).innerText =
+            accessories.map(item => `${item.name} ${item.count}EA`).join("\n");
+    } else {
+        document.getElementById(`accessories-${prefix}`).innerText = "부자재가 계산되지 않았습니다.";
+    }
+
+    return isForSummary ? { parts, accessories } : [];
+}
+
+    function generateSummary() {
         const zones = [
-          { prefix: "pay", label: "결제용", isForSummary: true },
-          { prefix: "order", label: "주문용", isForSummary: true },
-          { prefix: "kiosk", label: "대형키오스크용", isForSummary: true },
-          { prefix: "minikiosk", label: "미니키오스크용", isForSummary: true }
+            { prefix: "pay", label: "결제용", isForSummary: true },
+            { prefix: "order", label: "주문용", isForSummary: true },
+            { prefix: "kiosk", label: "대형키오스크용", isForSummary: true },
+            { prefix: "minikiosk", label: "미니키오스크용", isForSummary: true }
         ];
-      
+
         let equipmentSummary = "";
         zones.forEach(z => {
-          const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
-          equipmentSummary += `${z.label} : `;
-          equipmentSummary += zoneData.parts.length > 0 
-            ? zoneData.parts.map(item => `${item.name} ${item.count}EA`).join(", ") 
-            : "없음";
-          equipmentSummary += "\n";
+            const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+            equipmentSummary += `${z.label} : `;
+            equipmentSummary += zoneData.parts.length > 0
+                ? zoneData.parts.map(item => `${item.name} ${item.count}EA`).join(", ")
+                : "없음";
+            equipmentSummary += "\n";
         });
         document.getElementById("summary-content").innerText = equipmentSummary;
-      
+
         let aggregatedAccessories = [];
         zones.forEach(z => {
-          const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
-          zoneData.accessories.forEach(item => {
-            const exist = aggregatedAccessories.find(acc => acc.name === item.name);
-            if (exist) {
-              exist.count += item.count;
-            } else {
-              aggregatedAccessories.push({ name: item.name, count: item.count });
-            }
-          });
+            const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+            zoneData.accessories.forEach(item => {
+                const exist = aggregatedAccessories.find(acc => acc.name === item.name);
+                if (exist) {
+                    exist.count += item.count;
+                } else {
+                    aggregatedAccessories.push({ name: item.name, count: item.count });
+                }
+            });
         });
         document.getElementById("cable-summary-content").innerText =
-          aggregatedAccessories.length
-            ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ")
-            : "부자재 종류가 없습니다.";
-      
+            aggregatedAccessories.length
+                ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ")
+                : "부자재 종류가 없습니다.";
+
         let aggregatedEquipment = [];
         zones.forEach(z => {
-          const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
-          zoneData.parts.forEach(item => {
-            let normalizedName = item.name;
-		// W 프린터(영수용/주방용)를 유선프린터(W)로 통합
-		if (normalizedName.startsWith("유선프린터(W)")) {
-	  	normalizedName = "유선프린터(W)";
-		// B 프린터(영수용/주방용)를 유선프린터(B)로 통합
-		} else if (normalizedName.startsWith("유선프린터(B)")) {
-	 	 normalizedName = "유선프린터(B)";
-		}
-            // 키오스크존의 장비는 괄호와 괄호 안 내용을 제거합니다.
-            if (z.prefix === "kiosk") {
-              normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "");
-            }
-            const exist = aggregatedEquipment.find(eq => eq.name === normalizedName);
-            if (exist) {
-              exist.count += item.count;
-            } else {
-              aggregatedEquipment.push({ name: normalizedName, count: item.count });
-            }
-          });
+            const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+            zoneData.parts.forEach(item => {
+                let normalizedName = item.name;
+
+                // 유선프린터 이름 통합 (영수용/주방용 -> 대표 이름)
+                if (normalizedName.startsWith("유선프린터(W)")) {
+                    normalizedName = "유선프린터(W)";
+                } else if (normalizedName.startsWith("유선프린터(B)")) {
+                    normalizedName = "유선프린터(B)";
+                }
+                
+                // 키오스크 및 리더기 장비 이름에서 괄호와 그 안의 내용 제거하여 품번 매칭 준비
+                if (z.prefix === "kiosk") {
+                    // 키오스크 리더기 이름 정규화 (예: 'SPD-800 (KOVAN) (D타입)' -> 'SPD-800')
+                    normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "").trim();
+                }
+
+                // PC/노트북 구성의 복합 장비명은 분리하지 않음
+                if (item.name.includes("+") || item.name.includes(",")) {
+                    normalizedName = item.name;
+                }
+
+                const exist = aggregatedEquipment.find(eq => eq.name === normalizedName);
+                if (exist) {
+                    exist.count += item.count;
+                } else {
+                    aggregatedEquipment.push({ name: normalizedName, count: item.count });
+                }
+            });
         });
-      
+
         // 부자재와 장비 항목 합치기
         const combinedItems = [...aggregatedEquipment, ...aggregatedAccessories];
-        if (combinedItems.length > 0) {
-          // "영수증"을 포함한 항목과 포함하지 않은 항목을 분리합니다.
-          const withoutPaper = combinedItems.filter(item => !item.name.includes("영수증"));
-          const withPaper = combinedItems.filter(item => item.name.includes("영수증"));
-          
-          // 출력 형식 변환 함수: "영수증 2봉"인 경우 최종 수량을 두 배로 계산
-          const formatItem = (item) => {
-            let match = item.name.match(/^영수증\s*(\d+)\s*봉$/);
-            if (match) {
-              let factor = parseInt(match[1]);
-              return `영수증 ${factor * item.count}봉`;
-            }
-            return `${item.name} ${item.count}EA`;
-          };
-          
-          // "영수증" 항목은 마지막에 출력되도록 순서를 재배치
-          const outputItems = withoutPaper.map(formatItem).concat(withPaper.map(formatItem));
-          document.getElementById("output-summary-content").innerText = outputItems.join(", ");
-        } else {
-          document.getElementById("output-summary-content").innerText = "목록이 생성되지 않았습니다.";
-        }
-      }
-      
-	function resetAll() {
- 	 // 모든 숫자 입력과 체크박스 초기화
- 	 document.querySelectorAll("input[type='number'], input[type='checkbox']").forEach(input => {
-	    if (input.type === "checkbox") {
-	      input.checked = false;
-	    } else {
-	      input.value = 0;
-	    }
-	  });
-  
-	  // 전체 출력 영역 초기화
-	  document.getElementById("summary-content").innerText = "장비가 선택되지 않았습니다.";
-	  document.getElementById("cable-summary-content").innerText = "아직 계산된 부자재가 없습니다.";
-	  document.getElementById("output-summary-content").innerText = "목록이 생성되지 않았습니다.";
-  
- 	 // 각 구역(zone)의 요약 영역 초기화
-	  document.getElementById("summary-pay").innerText = "결제용 요약: 없음";
- 	 document.getElementById("accessories-pay").innerText = "결제용 부자재: 없음";
-  
- 	 document.getElementById("summary-order").innerText = "주문용 요약: 없음";
-	  document.getElementById("accessories-order").innerText = "주문용 부자재: 없음";
-  
-	  document.getElementById("summary-kiosk").innerText = "대형키오스크용 요약: 없음";
-	  document.getElementById("accessories-kiosk").innerText = "대형키오스크용 부자재: 없음";
-  
-	  document.getElementById("summary-minikiosk").innerText = "미니키오스크용 요약: 없음";
-	  document.getElementById("accessories-minikiosk").innerText = "미니키오스크용 부자재: 없음";
-	}
 
-      
-      // 초기 실행 시 자동 출력 제거 (장비선택 버튼을 눌렀을 때만 출력)
-      // generateSummary();
-    </script>
+        if (combinedItems.length > 0) {
+            // "영수증"을 포함한 항목과 포함하지 않은 항목을 분리합니다.
+            const withoutPaper = combinedItems.filter(item => !item.name.includes("영수증"));
+            const withPaper = combinedItems.filter(item => item.name.includes("영수증"));
+
+            // 출력 형식 변환 함수: 품번을 찾아 함께 출력
+const formatItem = (item) => {
+    const itemCode = itemCodeMapping[item.name] || "품번없음";
+
+    let match = item.name.match(/^영수증\s*(\d+)\s*봉$/);
+    if (match) {
+        let factor = parseInt(match[1]);
+        return `영수증 ${factor * item.count}봉(<b>${itemCode}</b>)`;
+    }
+
+    return `${item.name} ${item.count}EA(<b>${itemCode}</b>)`;
+};
+
+            // "영수증" 항목은 마지막에 출력되도록 순서를 재배치
+            const outputItems = withoutPaper.map(formatItem).concat(withPaper.map(formatItem));
+            document.getElementById("output-summary-content").innerHTML = outputItems.join(", ");
+        } else {
+            document.getElementById("output-summary-content").innerText = "목록이 생성되지 않았습니다.";
+        }
+    }
+
+    function resetAll() {
+        // 모든 숫자 입력과 체크박스 초기화
+        document.querySelectorAll("input[type='number'], input[type='checkbox']").forEach(input => {
+            if (input.type === "checkbox") {
+                input.checked = false;
+            } else {
+                input.value = 0;
+            }
+        });
+
+        // 전체 출력 영역 초기화
+        document.getElementById("summary-content").innerText = "장비가 선택되지 않았습니다.";
+        document.getElementById("cable-summary-content").innerText = "아직 계산된 부자재가 없습니다.";
+        document.getElementById("output-summary-content").innerText = "목록이 생성되지 않았습니다.";
+
+        // 각 구역(zone)의 요약 영역 초기화
+        document.getElementById("summary-pay").innerText = "결제용 요약: 없음";
+        document.getElementById("accessories-pay").innerText = "결제용 부자재: 없음";
+
+        document.getElementById("summary-order").innerText = "주문용 요약: 없음";
+        document.getElementById("accessories-order").innerText = "주문용 부자재: 없음";
+
+        document.getElementById("summary-kiosk").innerText = "대형키오스크용 요약: 없음";
+        document.getElementById("accessories-kiosk").innerText = "대형키오스크용 부자재: 없음";
+
+        document.getElementById("summary-minikiosk").innerText = "미니키오스크용 요약: 없음";
+        document.getElementById("accessories-minikiosk").innerText = "미니키오스크용 부자재: 없음";
+    }
+</script>
     
     <!-- 오른쪽 상단에 파란색 반투명 글씨로 made by OCT_내부지원 표시 (기존 코드 수정/삭제 없이 추가) -->
     <div class="made-by">
