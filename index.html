@@ -1,391 +1,904 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>아이샵케어 랜덤 런치 팀메이커</title>
-
-  <!-- Favicon: dark gray circle + centered 'R' -->
-  <link rel="icon" type="image/svg+xml"
-    href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="%232b2b2b"/><g transform="translate(32,32)"><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-size="40" font-weight="900" fill="%23fff">R</text></g></svg>'>
-
-  <!-- (선택) 브라우저 상단탭 색상 -->
-  <meta name="theme-color" content="#2b2b2b">
-
-  <style>
-    :root{
-      --brand:#1463ff; --brand-dark:#221815;
-      --bg:#f7f8fc; --card:#fff; --ink:var(--brand-dark); --sub:#6b7280; --line:#e8e9ef;
-      --shadow:0 10px 30px rgba(17,24,39,.08);
-      --shadow-sm:0 6px 14px rgba(17,24,39,.06);
-      --radius:16px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;color:var(--ink);font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial;
-      background:
-        radial-gradient(1200px 500px at 80% -50%, #dbe8ff 0%, transparent 60%),
-        radial-gradient(700px 450px at -10% 120%, #e7f3ff 0%, transparent 60%),
-        var(--bg);
-    }
-    .wrap{max-width:1120px;margin:auto;padding:16px}
-
-    .toolbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);background:linear-gradient(180deg,#ffffffcc,#ffffffb6);border-bottom:1px solid #e7ecf4}
-    .toolbar .bar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px}
-    .h1{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand-dark)}
-    .h1 .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
-    .ctrls{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{appearance:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;transition:all .15s ease;box-shadow:var(--shadow-sm)}
-    .btn:hover{transform:translateY(-1px); box-shadow:0 10px 18px rgba(17,24,39,.08)}
-    .btn:active{transform:translateY(0)}
-    .btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
-    .btn.primary{background:var(--brand);color:#fff;border-color:transparent}
-    .btn.primary:hover{filter:brightness(1.05)}
-
-    .panel{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin:16px 0;align-items:stretch}
-    @media(max-width:860px){.panel{grid-template-columns:1fr}}
-    .box{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:14px;height:100%;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow-sm)}
-    .box label{display:block;color:var(--sub);font-weight:600}
-    textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:12px;padding:12px;resize:vertical;font:14px/1.45 inherit;transition:border .15s, box-shadow .15s}
-    textarea:focus{outline:none;border-color:#c7d7ff;box-shadow:0 0 0 3px #dfe9ff}
-    .field{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0}
-    .field input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:220px;transition:border .15s, box-shadow .15s}
-    .field input:focus{outline:none;border-color:#c7d7ff;box-shadow:0 0 0 3px #dfe9ff}
-    .hint{color:var(--sub);font-size:12px}
-    .brand-panel{margin-top:4px;display:flex;justify-content:center;align-items:center;padding:6px 0}
-    .brand-panel img{max-width:100%;height:auto;max-height:80px;opacity:.95}
-
-    .titlebar{display:flex;align-items:flex-end;justify-content:space-between;padding:8px 4px;margin-top:4px}
-    .titlebar h2{margin:0;font-weight:900;color:var(--brand-dark);letter-spacing:.2px}
-    .metachips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #e7ecf4;box-shadow:var(--shadow-sm);font-size:12px;color:#374151}
-    .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
-
-    #captureArea.grid{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-    .grid-cards{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px}
-    @media(min-width:640px){.grid-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(min-width:1024px){.grid-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
-    .card{position:relative;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow-sm);overflow:hidden;animation:pop .35s ease both}
-    .card:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(17,24,39,.10)}
-    @keyframes pop{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .card-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #eef1f6;background:linear-gradient(180deg,#fcfdff,#f7f9ff)}
-    .car-id{display:flex;align-items:center;gap:8px;color:#6b7280;font-weight:700}
-    .car-id .id-dot{width:10px;height:10px;border-radius:50%;background:var(--tone,#cbd5e1);box-shadow:inset 0 0 0 2px #ffffff}
-    .team-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--tone,#cbd5e1);font-weight:700}
-    .team-chip .chip-dot{width:8px;height:8px;border-radius:50%;background:var(--tone,#cbd5e1)}
-    .car-wrap{padding:14px}
-    .foot{display:flex;align-items:center;justify-content:flex-start;padding:0 14px 14px 14px;color:var(--sub);font-size:12px}
-
-    .seat{position:absolute;transform:translate(-50%,-50%)}
-    .badge{
-      position:relative;display:inline-block;background:#fff;border:2px solid var(--line);
-      border-radius:12px;padding:6px 12px;font-weight:800;white-space:nowrap;
-      overflow:visible;text-overflow:clip;box-shadow:0 1px 2px rgba(0,0,0,.06);
-    }
-    .badge.driver{background:#fff7d6;border-color:#facc15}
-    .crown-float{
-      position:absolute; left:50%; transform:translateX(-50%);
-      bottom:calc(100% + 4px);
-      background:#fff; border:2px solid #facc15; border-radius:999px;
-      padding:2px 6px; line-height:1; font-size:14px;
-      box-shadow:0 1px 2px rgba(0,0,0,.08);
-    }
-
-    .error{display:flex;align-items:flex-start;gap:8px;color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;border-radius:12px;padding:10px 12px;margin-top:8px}
-
-    /* 저장 시 팀명 배지 줄바꿈 방지 (유지/강화) */
-    .card-head { gap: 10px; }
-    .team-chip, .car-id { white-space: nowrap; word-break: keep-all; flex-shrink: 0; }
-    .team-chip { inline-size: max-content; }           /* 내용만큼 가로 확보 */
-    .team-chip .chip-text { display:inline-block; white-space:nowrap; } /* 텍스트 강제 한줄 */
-
-    /* 카운트다운 오버레이 */
-    .overlay{position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center;
-      background:rgba(255,255,255,.92); backdrop-filter:blur(8px)}
-    .overlay.show{display:flex}
-    .count-wrap{text-align:center}
-    .count-num{font-size:96px; font-weight:900; letter-spacing:1px; color:#111827; animation:popin .5s ease}
-    .count-sub{color:#6b7280; font-size:14px; margin-top:8px}
-    @keyframes popin{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
-  </style>
-</head>
-<body>
-  <div class="toolbar">
-    <div class="bar wrap">
-      <div class="h1"><span class="brand-dot"></span>아이샵케어 랜덤 런치 팀메이커</div>
-      <div class="ctrls">
-        <button class="btn primary" id="btnMake">랜덤 조편성</button>
-        <button class="btn" id="btnSave" disabled>PNG로 저장</button>
-        <button class="btn" id="btnCopy" disabled>명단 복사</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="panel">
-      <div class="box">
-        <label>총 인원 이름</label>
-        <textarea id="inputNames" placeholder="쉼표/띄어쓰기/엔터로 구분"></textarea>
-        <div class="hint">현재 인원: <b id="count">0</b>명</div>
-      </div>
-      <div class="box">
-        <div class="field">
-          <label class="muted">제목</label>
-          <input id="title" placeholder="예: 9월 랜덤 런치" />
-        </div>
-        <div class="hint">※ 해당 제목은 파일명으로 저장됩니다.</div>
-        <div id="error" class="error" style="display:none">⚠️ 현재 인원으로는 균등한 팀 구성이 어려워요. (예: 1, 2, 5명은 불가)</div>
-        <div class="brand-panel">
-          <img src="./ishopcare-logo.png" alt="iShopCARE 로고" />
-        </div>
-      </div>
-    </div>
-
-    <div class="titlebar">
-      <div>
-        <h2 id="outTitle">랜덤 런치</h2>
-        <div id="meta" class="metachips"></div>
-      </div>
-    </div>
-
-    <div id="captureArea" class="grid">
-      <div class="grid-cards" id="cards"></div>
-    </div>
-  </div>
-
-  <!-- 카운트다운 오버레이 -->
-  <div id="overlay" class="overlay" aria-hidden="true">
-    <div class="count-wrap">
-      <div id="countNum" class="count-num">5</div>
-      <div class="count-sub">부릉부릉... 랜덤 런치 조를 공개합니다!</div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
-  <script>
-    const byId = id => document.getElementById(id);
-    const $names=byId('inputNames'), $count=byId('count');
-    const $btnMake=byId('btnMake'), $btnSave=byId('btnSave'), $btnCopy=byId('btnCopy');
-    const $error=byId('error'), $cards=byId('cards'), $meta=byId('meta');
-    const $titleIn=byId('title'), $titleOut=byId('outTitle'), $capture=byId('captureArea');
-    const $overlay=byId('overlay'), $countNum=byId('countNum');
-
-    function splitNames(text){ return text.replace(/[，、;]+/g, ',').split(/[\s,]+/).map(s=>s.trim()).filter(Boolean); }
-    function shuffle(a){a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j]]; } return a;}
-    /* fixed shuffle bug */ function shuffle(a){a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a;}
-
-    function hexToRgb(hex){ const v=hex.replace('#',''); const n=v.length===3? v.split('').map(x=>x+x).join(''):v; return {r:parseInt(n.slice(0,2),16), g:parseInt(n.slice(2,4),16), b:parseInt(n.slice(4,6),16)};}
-    function rgbToHex(r,g,b){ const h=n=>n.toString(16).padStart(2,'0'); return `#${h(r)}${h(g)}${h(b)}`; }
-    function clamp01(x){ return Math.max(0, Math.min(255, x)); }
-    function tint(hex, p){ const {r,g,b}=hexToRgb(hex); const t=p/100; return rgbToHex(clamp01(r+(255-r)*t), clamp01(g+(255-g)*t), clamp01(b+(255-b)*t)); }
-    function shade(hex, p){ const {r,g,b}=hexToRgb(hex); const t=1-(p/100); return rgbToHex(Math.round(r*t), Math.round(g*t), Math.round(b*t)); }
-
-    const carModels=[ '현대 아반떼','현대 쏘나타','현대 그랜저','현대 싼타페','현대 팰리세이드','현대 코나','현대 투싼','현대 아이오닉5','현대 아이오닉6','기아 모닝','기아 레이','기아 K3','기아 K5','기아 K8','기아 스포티지','기아 쏘렌토','기아 카니발','기아 EV6','제네시스 G70','제네시스 G80','제네시스 G90','제네시스 GV70','제네시스 GV80','테슬라 모델3','테슬라 모델Y','테슬라 모델S','테슬라 모델X','BMW 3시리즈','BMW 5시리즈','BMW X3','BMW X5','BMW i4','BMW iX','메르세데스-벤츠 C클래스','메르세데스-벤츠 E클래스','메르세데스-벤츠 GLC','메르세데스-벤츠 GLE','아우디 A4','아우디 A6','아우디 Q5','아우디 Q7','아우디 e-tron','폭스바겐 티구안','폭스바겐 골프','폭스바겐 ID.4','볼보 XC40','볼보 XC60','볼보 XC90','볼보 S60','토요타 프리우스','토요타 캠리','토요타 라브4','토요타 GR86','렉서스 ES','렉서스 NX','렉서스 RX','혼다 시빅','혼다 어코드','혼다 CR-V','닛산 알티마','닛산 로그','닛산 Z','포르쉐 911','포르쉐 카이엔','포르쉐 파나메라','포르쉐 마칸','포르쉐 타이칸','페라리 포르토피노','람보르기니 우루스','마세라티 그레칼레','포드 브롱코','포드 익스플로러','포드 머스탱','쉐보레 트래버스','쉐보레 말리부','쉐보레 트레일블레이저','지프 레니게이드','지프 랭글러','지프 그랜드체로키','르노 XM3','르노 SM6','쌍용 토레스','쌍용 렉스턴' ];
-    function uniqueCarNames(n){
-      const pool=[...carModels]; const shuffled=shuffle(pool);
-      if(n<=shuffled.length) return shuffled.slice(0,n);
-      const extra=[]; let i=0, round=2;
-      while(shuffled.length+extra.length<n){ extra.push(`${pool[i%pool.length]} •${round}`); i++; if(i%pool.length===0) round++; }
-      return [...shuffled,...extra].slice(0,n);
-    }
-
-    function teamColors(n){
-      const BASES=['#FFBE98','#9BBFA1','#8FB3D9','#B8A1D9','#D9836B','#E7CBA9','#7AA7A3','#C4A484','#8E9AAF','#A3C4B8','#F2C6DE','#93A8AC','#F0B265','#C7B9FF','#A7D3A6','#D2A6A4'];
-      const arr=[]; for(let i=0;i<n;i++){ const base=BASES[i%BASES.length]; arr.push({base,pale:tint(base,88),dark:shade(base,18)}); }
-      return arr;
-    }
-
-    const seatLayout=[{x:78,y:65},{x:162,y:65},{x:78,y:165},{x:162,y:165}];
-
-    function shrinkToFit(badge,maxWidth){ const base=parseInt(getComputedStyle(badge).fontSize,10)||14; let fs=base; badge.style.fontSize=''; while(badge.scrollWidth>maxWidth&&fs>11){ fs-=1; badge.style.fontSize=fs+'px'; } }
-    function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
-    function fitBadgesInsideCar(svgBox){
-      const margin=6, front={left:35,right:205,top:30,bottom:100}, rear={left:35,right:205,top:130,bottom:200};
-      const seats=svgBox.querySelectorAll('.seat');
-      const adjustPair=(aIdx,bIdx,area)=>{
-        const A=seats[aIdx], B=seats[bIdx];
-        const get=s=>s&&s.querySelector('.badge')?{seat:s,badge:s.querySelector('.badge')}:null;
-        const SA=get(A), SB=get(B);
-        const avail=area.right-area.left-2*margin, gap=8, half=Math.floor((avail-gap)/2);
-        [SA,SB].forEach(X=>{ if(!X) return; shrinkToFit(X.badge,half); });
-        [SA,SB].forEach((X,i)=>{ if(!X) return; const w=X.badge.offsetWidth, h=X.badge.offsetHeight; const cy0=parseFloat(X.seat.style.top);
-          const cx=i===0? area.left+margin+w/2 : area.right-margin-w/2;
-          X.seat.style.left=cx+'px'; X.seat.style.top=clamp(cy0, area.top+margin+h/2, area.bottom-margin-h/2)+'px';
-        });
-      };
-      adjustPair(0,1,front); adjustPair(2,3,rear);
-    }
-
-    function svgCar(i,theme){ return `
-      <svg width="240" height="230" viewBox="0 0 240 230">
-        <defs>
-          <linearGradient id="body${i}" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="${theme.base}" />
-            <stop offset="100%" stop-color="${theme.dark}" />
-          </linearGradient>
-          <linearGradient id="glass${i}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f8fbff" stop-opacity="0.96"/>
-            <stop offset="100%" stop-color="#e8f0ff" stop-opacity="0.92"/>
-          </linearGradient>
-          <radialGradient id="rim${i}" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#e5e7eb"/>
-            <stop offset="100%" stop-color="#9aa3af"/>
-          </radialGradient>
-          <linearGradient id="head${i}" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#cde7ff" stop-opacity="1"/>
-          </linearGradient>
-          <linearGradient id="tail${i}" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#ffb3b3"/>
-            <stop offset="100%" stop-color="#ff4545"/>
-          </linearGradient>
-          <filter id="glow${i}" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2.5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <ellipse cx="120" cy="214" rx="90" ry="10" fill="#00000018"/>
-        <g opacity="0.98">
-          <circle cx="36"  cy="58"  r="18" fill="#0b1220"/><circle cx="36"  cy="58"  r="9" fill="url(#rim${i})"/>
-          <circle cx="204" cy="58"  r="18" fill="#0b1220"/><circle cx="204" cy="58"  r="9" fill="url(#rim${i})"/>
-          <circle cx="36"  cy="172" r="18" fill="#0b1220"/><circle cx="36"  cy="172" r="9" fill="url(#rim${i})"/>
-          <circle cx="204" cy="172" r="18" fill="#0b1220"/><circle cx="204" cy="172"  r="9" fill="url(#rim${i})"/>
-        </g>
-        <path d="M26,110 C26,70, 38,44, 60,34 C85,22, 155,22, 180,34 C202,44, 214,70, 214,110 C214,150, 202,176, 180,186 C155,198, 85,198, 60,186 C38,176, 26,150, 26,110 Z"
-          fill="url(#body${i})" stroke="#0b122014" stroke-width="1.2"/>
-        <rect x="18"  y="95" width="10" height="30" rx="5" fill="${theme.dark}"/>
-        <rect x="212" y="95" width="10" height="30" rx="5" fill="${theme.dark}"/>
-        <rect x="35" y="30"  width="170" height="70"  rx="18" fill="url(#glass${i})" stroke="${theme.pale}"/>
-        <rect x="35" y="130" width="170" height="70"  rx="18" fill="url(#glass${i})" stroke="${theme.pale}"/>
-        <path d="M45 112 H195" stroke="#22181522" stroke-width="2"/>
-        <path d="M120 30 V200" stroke="#2218151f" stroke-width="1.2"/>
-        <rect x="50"  y="14" width="34" height="10" rx="6" fill="url(#head${i})" filter="url(#glow${i})" opacity=".95"/>
-        <rect x="156" y="14" width="34" height="10" rx="6" fill="url(#head${i})" filter="url(#glow${i})" opacity=".95"/>
-        <rect x="50"  y="206" width="28" height="9" rx="5" fill="url(#tail${i})" filter="url(#glow${i})" opacity=".9"/>
-        <rect x="162" y="206" width="28" height="9" rx="5" fill="url(#tail${i})" filter="url(#glow${i})" opacity=".9"/>
-      </svg>`; }
-
-    let teams=[], colors=[];
-    function renderMeta(total, teamCount){
-      $meta.innerHTML=[`<span class="chip"><span class="dot"></span>총 ${total}명</span>`,`<span class="chip"><span class="dot"></span>${teamCount}개 팀</span>`].join(' ');
-    }
-
-    function render(){
-      $cards.innerHTML='';
-      if(!teams.length){
-        const empty=document.createElement('div'); empty.className='muted';
-        empty.style.textAlign='center'; empty.style.padding='60px 0';
-        empty.innerHTML='이름을 입력하고 <b>랜덤 조편성</b>을 눌러주세요!';
-        $cards.appendChild(empty); $btnSave.disabled=true; $btnCopy.disabled=true; return;
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>장비별 부자재 헬퍼 - 장비선택 작동 버전</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap');
+      body {
+        font-family: 'Pretendard', sans-serif;
+        margin: 0;
+        background-color: #f0f4f9;
+        color: #1f2937;
       }
-      $btnSave.disabled=false; $btnCopy.disabled=false;
+      .container {
+        display: flex;
+        height: 100vh;
+      }
+      .sidebar {
+        width: 240px;
+        background-color: #f9fafb;
+        border-right: 1px solid #e5e7eb;
+        padding: 20px;
+      }
+      .sidebar h2 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #6b7280;
+      }
+      .tab-btn {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 12px 16px;
+        margin-bottom: 8px;
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .tab-btn:hover {
+        background-color: #eff6ff;
+      }
+      .tab-btn.active {
+        border-color: #0064ff;
+        background-color: #dbeafe;
+        color: #0064ff;
+      }
+      .content {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      /* 헤더 스타일 */
+      h3 {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0064ff;
+        margin-bottom: 16px;
+        margin-top: 0;
+        min-height: 40px;
+      }
+      h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 12px;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        width: 350px;
+        font-weight: 500;
+      }
+      .form-group input {
+        padding: 10px;
+        font-size: 1rem;
+        width: 100px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+      }
+      .form-group input[type="checkbox"] {
+        width: auto;
+      }
+      .zone-summary {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #fff;
+        border-left: 4px solid #0064ff;
+        border-radius: 8px;
+        padding-left: 16px;
+        font-weight: 500;
+      }
+      #summary,
+      #cable-summary,
+      #output-summary {
+        background-color: #fff;
+        border: 1px solid #cbd5e1;
+        padding: 20px;
+        margin-top: 24px;
+        border-radius: 12px;
+        white-space: pre-line;
+      }
+      #summary h4,
+      #cable-summary h4,
+      #output-summary h4 {
+        margin-bottom: 12px;
+        color: #1e40af;
+      }
+      .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 12px;
+      }
+      .action-buttons button {
+        background-color: #0064ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .action-buttons button:hover {
+        background-color: #0064ff;
+      }
+ .action-buttons .reset-btn {
+   background-color: #f44336; /* 빨간색 배경 */
+   color: white;           /* 흰색 텍스트 */
+   border: none;
+   border-radius: 8px;
+   padding: 10px 20px;
+   font-size: 14px;
+   font-weight: 600;
+   cursor: pointer;
+ }
+.action-buttons .reset-btn:hover {
+  background-color: darkred;  /* 마우스 오버 시 어두운 빨간색 */
+}
 
-      teams.forEach((t,i)=>{
-        const color=colors[i%colors.length];
-        const card=document.createElement('div'); card.className='card';
-        const head=document.createElement('div'); head.className='card-head';
 
-        const noWrapName = t.teamName.replace(/\s/g, '\u00A0'); // 공백을 NBSP로
+/* 모든 h4 요소의 기본 margin을 조정 (예시: 상하 0.5em) */
+h4 {
+  margin: 0.3em 0;
+}
 
-        head.innerHTML=`<div class="car-id"><span class="id-dot" style="background:${color.base}"></span>${i+1}호차</div>
-          <div class="team-chip" style="border-color:${color.dark}; background:${color.pale}">
-            <span class="chip-dot" style="background:${color.base}"></span><span class="chip-text">${noWrapName}</span>
-          </div>`;
 
-        const carWrap=document.createElement('div'); carWrap.className='car-wrap';
-        const svgBox=document.createElement('div'); svgBox.style.position='relative'; svgBox.style.width='240px'; svgBox.style.height='230px'; svgBox.style.margin='0 auto';
-        svgBox.innerHTML=svgCar(i,color);
+/* disclaimer 클래스가 붙은 h4 요소 */
+#output-summary h4.disclaimer {
+  margin-top: 0.2em;      
+  font-size: 0.8em;      
+  font-style: italic;
+  color: grey !important;
+}
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-        const seats=[t.members[0],t.members[1],t.members[2],t.members[3]];
-        seatLayout.forEach((pos,idx)=>{
-          const name=seats[idx]; if(!name) return;
-          const seat=document.createElement('div'); seat.className='seat';
-          seat.style.left=pos.x+'px'; seat.style.top=pos.y+'px';
-          const badge=document.createElement('div'); badge.className='badge'+(idx===0?' driver':'');
-          if(idx!==0) badge.style.borderColor=color.dark;
-          badge.textContent=name; badge.title=name; seat.appendChild(badge);
-          if(idx===0){ const crown=document.createElement('div'); crown.className='crown-float'; crown.textContent='👑'; seat.appendChild(crown); }
-          svgBox.appendChild(seat);
+.logo img {
+  width: 120px !important;  /* 원하는 크기로 고정 (예: 120px) */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0064ff;
+  margin-top: 10px;
+}
+      .made-by {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  font-size: 15px; /* 필요에 따라 크기 조절 */
+  color: #0064ff;   
+  z-index: 1000; /* 다른 요소 위에 보이도록 */
+}
+      /* 결제존 탭 내부 flex 컨테이너: 좌측(결제존 구성) / 우측(PC/노트북 구성) */
+      .flex-container {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .left-col,
+      .right-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 좌측 사이드바 -->
+      <div class="sidebar">
+        <div class="logo">
+      <img src="아샵로고.png" alt="아샵로고" />
+      <div class="logo-text">장비별 부자재 헬퍼</div>
+    </div>
+        <h2>용도 선택</h2>
+        <button class="tab-btn active" data-target="pay">결제용</button>
+        <button class="tab-btn" data-target="order">주문용</button>
+        <button class="tab-btn" data-target="kiosk">대형키오스크용</button>
+        <button class="tab-btn" data-target="minikiosk">미니키오스크용</button>
+      </div>
+      <!-- 우측 콘텐츠 영역 -->
+      <div class="content">
+        <!-- 결제존 탭 -->
+        <div id="pay" class="tab-content active">
+          <div class="flex-container">
+            <!-- 왼쪽 컬럼: 결제용 구성 -->
+            <div class="left-col">
+              <h3>결제용 구성</h3>
+              <div class="form-group">
+                <label>포스기:</label>
+                <input type="number" id="pay_pos" value="0">
+              </div>
+              <div class="form-group">
+                <label>태블릿:</label>
+                <input type="number" id="pay_tablet" value="0">
+              </div>
+              <div class="form-group">
+                <label>프론트(W):</label>
+                <input type="number" id="pay_front_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>프론트(B):</label>
+                <input type="number" id="pay_front_b" value="0">
+              </div>
+              <div class="form-group">
+                <label>터미널:</label>
+                <input type="number" id="pay_terminal" value="0">
+              </div>
+              <div class="form-group">
+                <label>유선프린터(W)(영수용):</label>
+                <input type="number" id="pay_printer_200w" value="0">
+              </div>
+              <div class="form-group">
+                <label>유선프린터(B)(영수용):</label>
+                <input type="number" id="pay_printer_200b" value="0">
+              </div>
+              <div class="form-group">
+                <label>유선프린터(W)(주방용):</label>
+                <input type="number" id="pay_printer_200_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>유선프린터(B)(주방용):</label>
+                <input type="number" id="pay_printer_200_b" value="0">
+              </div>
+              <div class="form-group">
+                <label>TS-400(블루투스)(W)프린터:</label>
+                <input type="number" id="pay_printer_400_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>TS-400(블루투스)(B)프린터:</label>
+                <input type="number" id="pay_printer_400_b" value="0">
+              </div>
+              <div class="form-group">
+                <label>TS-400(WIFI)(W)프린터:</label>
+                <input type="number" id="pay_printer_toss_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>TS-400(WIFI)(B)프린터:</label>
+                <input type="number" id="pay_printer_toss_b" value="0">
+              </div>
+              <!-- 추가: 결제용 기기 변경 및 추가 (왼쪽 컬럼) -->
+              <div class="form-group">
+                <label>KOVAN-단말기:</label>
+                <input type="number" id="pay_KOVAN" value="0">
+              </div>
+              <div class="form-group">
+                <label>KSNET-단말기:</label>
+                <input type="number" id="pay_ksnet" value="0">
+              </div>
+              <div class="form-group">
+                <label>NICE-단말기:</label>
+                <input type="number" id="pay_nice" value="0">
+              </div>
+              <div class="form-group">
+                <label>KIS-단말기:</label>
+                <input type="number" id="pay_kis" value="0">
+              </div>
+              <div class="form-group">
+                <label>KPN-단말기:</label>
+                <input type="number" id="pay_kpn" value="0">
+              </div>
+              <div class="form-group">
+                <label>DAOU-단말기:</label>
+                <input type="number" id="pay_daou" value="0">
+              </div>
+              <!-- 금전함 추가 -->
+              <div class="form-group">
+                <label>금전함 소형(W):</label>
+                <input type="number" id="pay_moneybox_small_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>금전함 소형(B):</label>
+                <input type="number" id="pay_moneybox_small_b" value="0">
+              </div>
+              <div class="form-group">
+                <label>금전함 대형(W):</label>
+                <input type="number" id="pay_moneybox_large_w" value="0">
+              </div>
+              <div class="form-group">
+                <label>금전함 대형(B):</label>
+                <input type="number" id="pay_moneybox_large_b" value="0">
+              </div>
+            </div>
+            <!-- 오른쪽 컬럼: PC/노트북 구성 -->
+<div class="right-col">
+    <h3>PC/노트북 구성</h3>
+    <h4>&lt;핸드sos, 통통통 등 CRM사용 시&gt;</h4>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KSNET-단말기:</label>
+        <input type="checkbox" id="pay_hand1">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+NICE-단말기:</label>
+        <input type="checkbox" id="pay_hand2">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KIS-단말기:</label>
+        <input type="checkbox" id="pay_hand3">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KPN-단말기:</label>
+        <input type="checkbox" id="pay_hand4">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+DAOU-단말기:</label>
+        <input type="checkbox" id="pay_hand5">
+    </div>
+    <div class="form-group">
+        <label for="pay_hand">PC/노트북+프론트(W)+KOVAN-단말기:</label>
+        <input type="checkbox" id="pay_hand6">
+    </div>
+    <h4>&lt;배달3사 사용 시&gt;</h4>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KSNET-단말기:</label>
+        <input type="checkbox" id="pay_del1">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+NICE-단말기:</label>
+        <input type="checkbox" id="pay_del2">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KIS-단말기:</label>
+        <input type="checkbox" id="pay_del3">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KPN-단말기:</label>
+        <input type="checkbox" id="pay_del4">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+DAOU-단말기:</label>
+        <input type="checkbox" id="pay_del5">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+KOVAN-단말기:</label>
+        <input type="checkbox" id="pay_del6">
+    </div>
+    <div class="form-group">
+        <label for="pay_del">PC/노트북+프론트(W)+유선프린터:</label>
+        <input type="checkbox" id="pay_del7">
+    </div>
+    <h4>&lt;CRM, 배달3사 미사용 시 &gt;</h4>
+    <div class="form-group">
+        <label for="pay_nope">PC/노트북+프론트(W)+프린터:</label>
+        <input type="checkbox" id="pay_nope">
+    </div>
+</div>
+          </div>
+          <div class="zone-summary" id="summary-pay">결제용 요약: 없음</div>
+          <div class="zone-summary" id="accessories-pay">결제용 부자재: 없음</div>
+        </div>
+        
+        <!-- 오더존 탭 -->
+        <div id="order" class="tab-content">
+          <h3>주문용 구성</h3>
+          <div class="form-group">
+            <label>포스기:</label>
+            <input type="number" id="order_pos" value="0">
+          </div>
+          <div class="form-group">
+            <label>태블릿:</label>
+            <input type="number" id="order_tablet" value="0">
+          </div>
+          <div class="form-group">
+            <label>유선프린터(W):</label>
+            <input type="number" id="order_printer_200w" value="0">
+          </div>
+          <div class="form-group">
+            <label>유선프린터(B):</label>
+            <input type="number" id="order_printer_200b" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400(블루투스)(W)프린터:</label>
+            <input type="number" id="order_printer_400_w" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400(블루투스)(B)프린터:</label>
+            <input type="number" id="order_printer_400_b" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400(WIFI)프린터(W):</label>
+            <input type="number" id="order_printer_toss_w" value="0">
+          </div>
+          <div class="form-group">
+            <label>TS-400(WIFI)프린터(B):</label>
+            <input type="number" id="order_printer_toss_b" value="0">
+          </div>
+          <div class="zone-summary" id="summary-order">주문용 요약: 없음</div>
+          <div class="zone-summary" id="accessories-order">주문용 부자재: 없음</div>
+        </div>
+        
+        <!-- 키오스크존 탭 (새로운 항목으로 교체) -->
+        <div id="kiosk" class="tab-content">
+          <h3>대형키오스크용 구성</h3>
+          <!-- &lt;키오스크&gt; 그룹 -->
+          <h4>&lt;키오스크&gt;</h4>
+          <div class="form-group">
+            <label>배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 스탠드형:</label>
+            <input type="number" id="kiosk_D_stand" value="0">
+          </div>
+          <div class="form-group">
+            <label>배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 데스크형:</label>
+            <input type="number" id="kiosk_D_desk" value="0">
+          </div>
+          <div class="form-group">
+            <label>배리어프리 IMU KIOSK E(NICE)타입 스탠드형:</label>
+            <input type="number" id="kiosk_E_stand" value="0">
+          </div>
+          <div class="form-group">
+            <label>배리어프리 IMU KIOSK E(NICE)타입 데스크형:</label>
+            <input type="number" id="kiosk_E_desk" value="0">
+          </div>
+          
+          <!-- &lt;리더기&gt; 그룹 -->
+          <h4>&lt;리더기&gt;</h4>
+          <div class="form-group">
+            <label>SP420QN (KIS D타입):</label>
+            <input type="number" id="kiosk_leader2" value="0">
+          </div>
+          <div class="form-group">
+            <label>DD-MP2000 (DAOU D타입):</label>
+            <input type="number" id="kiosk_leader3" value="0">
+          </div>
+          <div class="form-group">
+            <label>SPD-800KS (KSNET D타입):</label>
+            <input type="number" id="kiosk_leader4" value="0">
+          </div>
+          <div class="form-group">
+            <label>NK-2500QN (NICE E타입):</label>
+            <input type="number" id="kiosk_leader5" value="0">
+          </div>
+          <div class="zone-summary" id="summary-kiosk">대형키오스크용 요약: 없음</div>
+          <div class="zone-summary" id="accessories-kiosk">대형키오스크용 부자재: 없음</div>
+        </div>
+        
+        <!-- 미니키오스크존 탭 -->
+        <div id="minikiosk" class="tab-content">
+          <h3>미니키오스크용 구성</h3>
+          <div class="form-group">
+            <label>프론트(W):</label>
+            <input type="number" id="minikiosk_front_w" value="0">
+          </div>
+          <div class="form-group">
+            <label>프론트(B):</label>
+            <input type="number" id="minikiosk_front_b" value="0">
+          </div>
+          <div class="form-group">
+            <label>유선프린터(W):</label>
+            <input type="number" id="minikiosk_printer_200w" value="0">
+          </div>
+          <div class="form-group">
+            <label>유선프린터(B):</label>
+            <input type="number" id="minikiosk_printer_200b" value="0">
+          </div>
+          <div class="zone-summary" id="summary-minikiosk">미니키오스크용 요약: 없음</div>
+          <div class="zone-summary" id="accessories-minikiosk">미니키오스크용 부자재: 없음</div>
+        </div>
+        
+        <!-- 버튼 및 출력 영역 -->
+        <div class="action-buttons">
+          <button onclick="generateSummary()">장비선택</button>
+          <button class="reset-btn" onclick="resetAll()">전체 리셋</button>
+        </div>
+        <div id="summary">
+          <h4>장비 종류 (구역별)</h4>
+          <div id="summary-content">장비가 선택되지 않았습니다.</div>
+        </div>
+        <div id="cable-summary">
+          <h4>부자재 종류 (전체 집계)</h4>
+          <div id="cable-summary-content">아직 계산된 부자재가 없습니다.</div>
+        </div>
+        <div id="output-summary">
+          <h4 class="disclaimer">
+            이 정보는 참고용으로 제공되는 것이며, 실제 적용 전에는 반드시 추가 확인(더블체크)을 하시기 바랍니다.
+          </h4>  
+          <h4>전체 장비+부자재</h4>
+          <div id="output-summary-content">목록이 생성되지 않았습니다.</div>
+        </div>
+      </div>
+    </div>
+    
+<script>
+    // 탭 전환 처리
+    const tabs = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.target).classList.add("active");
+        });
+    });
+
+    // 부자재 매핑
+    const accessoryMapping = {
+        "pay": {
+            "포스기": "LAN cable, 포스기 안내 가이드",
+            "태블릿": "태블릿 거치대, 갤럭시탭 액정필름",
+            "프론트(W)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
+            "프론트(B)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
+            "터미널": "RJ9 to RJ9, 영수증 2봉",
+            "유선프린터(W)(영수용)": "CROSS GENDER, 영수증 2봉",
+            "유선프린터(B)(영수용)": "CROSS GENDER, 영수증 2봉",
+            "유선프린터(W)(주방용)": "영수증 2봉",
+            "유선프린터(B)(주방용)": "영수증 2봉",
+            "TS-400(블루투스)(W)프린터": "영수증 2봉",
+            "TS-400(블루투스)(B)프린터": "영수증 2봉",
+            "TS-400(WIFI)(W)프린터": "영수증 2봉",
+            "TS-400(WIFI)(B)프린터": "영수증 2봉",
+            "KOVAN-단말기": "LAN cable, 프론트-CAT cable(B), 영수증 2봉",
+            "KSNET-단말기": "LAN cable, 프론트-CAT cable(KSNET), CROSS GENDER, KSNET BRD(Y자), 영수증 2봉",
+            "NICE-단말기": "LAN cable, 프론트-CAT cable(A), NICE 신형 BRD, 영수증 2봉",
+            "KIS-단말기": "LAN cable, 프론트-CAT cable(A), KIS BRD, 영수증 2봉",
+            "KPN-단말기": "LAN cable, 프론트-CAT cable(A), KPN BRD, 영수증 2봉",
+            "DAOU-단말기": "LAN cable, 프론트-CAT cable(A), DAOU BRD, 영수증 2봉",
+            "금전함 소형(W)": "", "금전함 소형(B)": "", "금전함 대형(W)": "", "금전함 대형(B)": "", "영수증 2봉": ""
+        },
+        "order": {
+            "포스기": "LAN cable",
+            "태블릿": "태블릿 거치대, 갤럭시탭 액정필름",
+            "유선프린터(W)": "영수증 2봉",
+            "유선프린터(B)": "영수증 2봉",
+            "TS-400(블루투스)(W)프린터": "영수증 2봉",
+            "TS-400(블루투스)(B)프린터": "영수증 2봉",
+            "TS-400(WIFI)(W)프린터": "영수증 2봉",
+            "TS-400(WIFI)(B)프린터": "영수증 2봉"
+        },
+        "kiosk": {
+            "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 스탠드형": "LAN cable, 스탠드 받침대, 영수증 2봉",
+            "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 데스크형": "LAN cable, 영수증 2봉",
+            "배리어프리 IMU KIOSK E(NICE)타입 스탠드형": "LAN cable, 스탠드 받침대, 영수증 2봉",
+            "배리어프리 IMU KIOSK E(NICE)타입 데스크형": "LAN cable, 영수증 2봉",
+            "SP420QN (KIS D타입)": "",
+            "DD-MP2000 (DAOU D타입)": "",
+            "NK-2500QN (NICE E타입)": "",
+            "SPD-800KS (KSNET D타입)": ""
+        },
+        "minikiosk": {
+            "프론트(W)": "RJ9 to RS232", "프론트(B)": "RJ9 to RS232",
+            "유선프린터(W)": "CROSS GENDER, 영수증 2봉", "유선프린터(B)": "CROSS GENDER, 영수증 2봉"
+        }
+    };
+
+    const itemCodeMapping = {
+        // 장비 품번
+        "포스기": "POSN250",
+        "태블릿": "TABGALAXYA9",
+        "프론트(W)": "TOSSFR02WH",
+        "프론트(B)": "TOSSFR02BK",
+        "터미널": "TOSSTR01",
+        "유선프린터(W)": "PRCPP3000WH",
+        "유선프린터(B)": "PRCPP3000BK",
+        "TS-400(블루투스)(W)프린터": "PRTS400WH",
+        "TS-400(블루투스)(B)프린터": "PRTS400BK",
+        "TS-400(WIFI)(W)프린터": "PRTS400WWH",
+        "TS-400(WIFI)(B)프린터": "PRTS400WBK",
+        "KOVAN-단말기": "품번없음",
+        "KSNET-단말기": "KSNETCATKS1060C",
+        "NICE-단말기": "NICECATNC8000",
+        "KIS-단말기": "KISCATKIS1421",
+        "KPN-단말기": "KPNCATMPOS1700AE",
+        "DAOU-단말기": "DAOUCATDD2300",
+        "금전함 소형(W)": "CASH330AWH",
+        "금전함 소형(B)": "CASH330ABK",
+        "금전함 대형(W)": "CASH405AWH",
+        "금전함 대형(B)": "CASH405ABK",
+        "배리어프리 IMU KIOSK E타입 스탠드형": "KIOSKT6BE",
+        "배리어프리 IMU KIOSK E타입 데스크형": "KIOSKT6BE",
+        "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 스탠드형": "KIOSKT6BD",
+        "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 데스크형": "KIOSKT6BD",
+        "SP420QN": "KISMPSP420QN",     
+        "DD-MP2000": "DAOUMPMP2000",  
+        "SPD-800KS": "KSNETMPSPD800KS", 
+        "NK-2500QN": "NICEMPNK2500QN",  
+
+        // 부자재 품번
+        "영수증 2봉": "SM049",
+        "RJ9 to RS232": "SM001",
+        "RJ9 to RJ9": "SM044",
+        "CROSS GENDER": "SM003",
+        "LAN cable": "SM030",
+        "프론트-CAT cable(KSNET)": "SM024",
+        "KSNET BRD(Y자)": "SM028",
+        "프론트-CAT cable(A)": "SM022",
+      "프론트-CAT cable(B)": "SM023",
+        "NICE 신형 BRD": "SM047",
+        "KIS BRD": "SM025",
+        "KPN BRD": "SM027",
+        "DAOU BRD": "SM046",
+        "포스기 안내 가이드": "SM045",
+        "태블릿 거치대": "SM014",
+        "갤럭시탭 액정필름": "SM058",
+        "스탠드 받침대": "KIOSKSTAND",
+        "USB to RS232": "SM008",
+        "POP 2종 & QR & 리플렛": "SMSET",
+        "KOVAN BRD": "품번없음",
+    };
+
+    // 각 구역의 선택된 장비 및 부자재 요약 함수
+    function summarizeZone(prefix, label, isForSummary) {
+        const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map(el => el.id);
+        const parts = [];
+        let accessories = [];
+        const mapping = accessoryMapping[prefix] || {};
+
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            if (el.type === "checkbox" && prefix === "pay") {
+                if (id === "pay_hand1" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "KSNET BRD(Y자)", count: 1 });
+                    accessories.push({ name: "프론트-CAT cable(KSNET)", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KSNET-단말기", count: 1 });
+                } else if (id === "pay_hand2" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "NICE 신형 BRD", count: 1 });
+                    accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "NICE-단말기", count: 1 });
+                } else if (id === "pay_hand3" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KIS BRD", count: 1 });
+                    accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KIS-단말기", count: 1 });
+                } else if (id === "pay_hand4" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KPN BRD", count: 1 });
+                    accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KPN-단말기", count: 1 });
+                } else if (id === "pay_hand5" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "DAOU BRD", count: 1 });
+                    accessories.push({ name: "프론트-CAT cable(A)", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "DAOU-단말기", count: 1 });
+                } else if (id === "pay_hand6" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KOVAN BRD", count: 1 });
+                    accessories.push({ name: "프론트-CAT cable(B)", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KOVAN-단말기", count: 1 });
+                } else if (id === "pay_del1" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KSNET BRD(Y자)", count: 1 });
+                    accessories.push({ name: "CROSS GENDER", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KSNET-단말기", count: 1 });
+                } else if (id === "pay_del2" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "NICE 신형 BRD", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "NICE-단말기", count: 1 });
+                } else if (id === "pay_del3" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KIS BRD", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KIS-단말기", count: 1 });
+                } else if (id === "pay_del4" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KPN BRD", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KPN-단말기", count: 1 });
+                } else if (id === "pay_del5" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "DAOU BRD", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "DAOU-단말기", count: 1 });
+                } else if (id === "pay_del6" && el.checked) {
+                    accessories.push({ name: "LAN cable", count: 1 });
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "USB to RS232", count: 1 });
+                    accessories.push({ name: "KOVAN BRD", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "KOVAN-단말기", count: 1 });
+                } else if (id === "pay_del7" && el.checked) {
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "유선프린터(W)", count: 1 });
+                } else if (id === "pay_nope" && el.checked) {
+                    accessories.push({ name: "RJ9 to RS232", count: 1 });
+                    accessories.push({ name: "CROSS GENDER", count: 1 });
+                    accessories.push({ name: "영수증 2봉", count: 1 });
+                    parts.push({ name: "프론트(W)", count: 1 });
+                    parts.push({ name: "유선프린터(W)", count: 1 });
+                }
+            } else if (el.type === "number") {
+                const value = parseInt(el.value);
+                if (value > 0) {
+                    const name = el.previousElementSibling.textContent.replace(":", "").trim();
+                    parts.push({ name: name, count: value });
+                    if (mapping[name] && mapping[name].trim() !== "") {
+                        const accItems = mapping[name].split(",");
+                        accItems.forEach(item => {
+                            const accName = item.trim();
+                            accessories.push({ name: accName, count: value });
+                        });
+                    }
+                }
+            }
         });
 
-        requestAnimationFrame(()=>fitBadgesInsideCar(svgBox));
-        const foot=document.createElement('div'); foot.className='foot'; foot.innerHTML=`조장: <b>${t.leader}</b>`;
-        carWrap.appendChild(svgBox); card.appendChild(head); card.appendChild(carWrap); card.appendChild(foot);
-        $cards.appendChild(card);
-      });
-    }
-
-    function updateCounts(){ $count.textContent=splitNames($names.value).length; }
-
-    function partition34(n){ if(n===1||n===2||n===5) return null; for(let b=Math.floor(n/4); b>=0; b--){const rem=n-4*b; if(rem%3===0) return {a3:rem/3,b4:b}; } return null; }
-    function makeGroups34(list){
-      const plan=partition34(list.length); if(!plan) return null;
-      const s=shuffle(list); const groups=[]; let idx=0;
-      for(let i=0;i<plan.b4;i++){groups.push(s.slice(idx,idx+4)); idx+=4;}
-      for(let i=0;i<plan.a3;i++){groups.push(s.slice(idx,idx+3)); idx+=3;}
-      return groups;
-    }
-    function pickLeaders(groups){
-      const names=uniqueCarNames(groups.length);
-      return groups.map((g,i)=>{ const leaderIdx=Math.floor(Math.random()*g.length); const leader=g[leaderIdx]; const others=g.filter((_,k)=>k!==leaderIdx);
-        return { teamName:names[i], leader, members:[leader,...others] }; });
-    }
-
-    function make(){
-      const names=splitNames($names.value); updateCounts();
-      $error.style.display='none';
-      if(names.length<3){ $error.style.display='block'; teams=[]; render(); renderMeta(names.length,0); return; }
-      const g=makeGroups34(names); if(!g){ $error.style.display='block'; teams=[]; render(); renderMeta(names.length,0); return; }
-      teams=pickLeaders(g);
-      colors=teamColors(teams.length);
-      $titleOut.textContent=$titleIn.value.trim()||'랜덤 런치';
-      renderMeta(names.length, teams.length);
-      render();
-    }
-
-    function sanitizedTitle(t){ return (t||'').replace(/\s+/g,' ').trim().replace(/[\\/:*?"<>|]/g,'-'); }
-    function savePng(){
-      const title=sanitizedTitle($titleIn.value);
-      const fname= title ? `랜덤런치_${title}.png` : '랜덤런치.png';
-      document.querySelectorAll('.car-wrap > div').forEach(fitBadgesInsideCar);
-      htmlToImage.toPng($capture,{pixelRatio:2.5,backgroundColor:'#ffffff'})
-        .then(url=>{ const a=document.createElement('a'); a.href=url; a.download=fname; a.click(); })
-        .catch(()=>alert('이미지 저장 중 오류가 발생했어요. 다시 시도해 주세요.'));
-    }
-    function copyList(){
-      if(!teams.length) return;
-      const text=teams.map((t,i)=>`${i+1}팀(${t.teamName}) - 조장:${t.leader} | ${t.members.join(', ')}`).join('\n');
-      navigator.clipboard.writeText(text).then(()=>alert('팀 명단을 복사했어요!')).catch(()=>alert('복사 실패: 브라우저 권한을 확인하세요.'));
-    }
-
-    /* 카운트다운 */
-    function startCountdown(sec, cb){
-      let n = sec;
-      $overlay.classList.add('show');
-      $overlay.setAttribute('aria-hidden','false');
-      $countNum.textContent = n;
-      $btnMake.disabled = true;
-
-      const timer = setInterval(()=>{
-        if(n <= 1){
-          $countNum.textContent = 'GO!';
-          clearInterval(timer);
-          setTimeout(()=>{
-            $overlay.classList.remove('show');
-            $overlay.setAttribute('aria-hidden','true');
-            cb();
-            $btnMake.disabled = false;
-          }, 550);
-          return;
+        const zoneText = parts.length ? `${label} : ${parts.map(item => `${item.name} ${item.count}EA`).join(", ")}` : `${label} : 없음`;
+        document.getElementById(`summary-${prefix}`).innerText = zoneText;
+        if (accessories.length) {
+            document.getElementById(`accessories-${prefix}`).innerText = accessories.map(item => `${item.name} ${item.count}EA`).join("\n");
+        } else {
+            document.getElementById(`accessories-${prefix}`).innerText = "부자재가 계산되지 않았습니다.";
         }
-        n -= 1;
-        $countNum.textContent = n;
-      }, 1000);
+        return isForSummary ? { parts, accessories } : [];
     }
 
-    $btnMake.onclick = () => startCountdown(5, make);
-    $btnSave.onclick=savePng; $btnCopy.onclick=copyList;
-    $names.addEventListener('input', updateCounts); updateCounts();
-  </script>
-</body>
+    function generateSummary() {
+        const zones = [
+            { prefix: "pay", label: "결제용", isForSummary: true },
+            { prefix: "order", label: "주문용", isForSummary: true },
+            { prefix: "kiosk", label: "대형키오스크용", isForSummary: true },
+            { prefix: "minikiosk", label: "미니키오스크용", isForSummary: true }
+        ];
+
+        let equipmentSummary = "";
+        zones.forEach(z => {
+            const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+            equipmentSummary += `${z.label} : `;
+            equipmentSummary += zoneData.parts.length > 0 ? zoneData.parts.map(item => `${item.name} ${item.count}EA`).join(", ") : "없음";
+            equipmentSummary += "\n";
+        });
+        document.getElementById("summary-content").innerText = equipmentSummary;
+
+        let aggregatedAccessories = [];
+        zones.forEach(z => {
+            const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+            zoneData.accessories.forEach(item => {
+                const exist = aggregatedAccessories.find(acc => acc.name === item.name);
+                if (exist) {
+                    exist.count += item.count;
+                } else {
+                    aggregatedAccessories.push({ name: item.name, count: item.count });
+                }
+            });
+        });
+        document.getElementById("cable-summary-content").innerText = aggregatedAccessories.length ? aggregatedAccessories.map(item => `${item.name} ${item.count}EA`).join(", ") : "부자재 종류가 없습니다.";
+
+        let aggregatedEquipment = [];
+        zones.forEach(z => {
+            const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
+            zoneData.parts.forEach(item => {
+                let normalizedName = item.name;
+
+                if (normalizedName.startsWith("유선프린터(W)")) {
+                    normalizedName = "유선프린터(W)";
+                } else if (normalizedName.startsWith("유선프린터(B)")) {
+                    normalizedName = "유선프린터(B)";
+                }
+                
+                if (z.prefix === "kiosk") {
+                    normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "").trim();
+                }
+
+                if (item.name.includes("+") || item.name.includes(",")) {
+                    normalizedName = item.name;
+                }
+
+                const exist = aggregatedEquipment.find(eq => eq.name === normalizedName);
+                if (exist) {
+                    exist.count += item.count;
+                } else {
+                    aggregatedEquipment.push({ name: normalizedName, count: item.count });
+                }
+            });
+        });
+
+        const combinedItems = [...aggregatedEquipment, ...aggregatedAccessories];
+
+        if (combinedItems.length > 0) {
+            const withoutPaper = combinedItems.filter(item => !item.name.includes("영수증"));
+            const withPaper = combinedItems.filter(item => item.name.includes("영수증"));
+
+            const formatItem = (item) => {
+                const itemCode = itemCodeMapping[item.name] || "품번없음";
+                let match = item.name.match(/^영수증\s*(\d+)\s*봉$/);
+                if (match) {
+                    let factor = parseInt(match[1]);
+                    return `영수증 ${factor * item.count}봉(<b>${itemCode}</b>)`;
+                }
+                return `${item.name} ${item.count}EA(<b>${itemCode}</b>)`;
+            };
+
+            const outputItems = withoutPaper.map(formatItem).concat(withPaper.map(formatItem));
+            document.getElementById("output-summary-content").innerHTML = outputItems.join(", ");
+        } else {
+            document.getElementById("output-summary-content").innerText = "목록이 생성되지 않았습니다.";
+        }
+    }
+
+    function resetAll() {
+        document.querySelectorAll("input[type='number'], input[type='checkbox']").forEach(input => {
+            if (input.type === "checkbox") {
+                input.checked = false;
+            } else {
+                input.value = 0;
+            }
+        });
+        document.getElementById("summary-content").innerText = "장비가 선택되지 않았습니다.";
+        document.getElementById("cable-summary-content").innerText = "아직 계산된 부자재가 없습니다.";
+        document.getElementById("output-summary-content").innerText = "목록이 생성되지 않았습니다.";
+        document.getElementById("summary-pay").innerText = "결제용 요약: 없음";
+        document.getElementById("accessories-pay").innerText = "결제용 부자재: 없음";
+        document.getElementById("summary-order").innerText = "주문용 요약: 없음";
+        document.getElementById("accessories-order").innerText = "주문용 부자재: 없음";
+        document.getElementById("summary-kiosk").innerText = "대형키오스크용 요약: 없음";
+        document.getElementById("accessories-kiosk").innerText = "대형키오스크용 부자재: 없음";
+        document.getElementById("summary-minikiosk").innerText = "미니키오스크용 요약: 없음";
+        document.getElementById("accessories-minikiosk").innerText = "미니키오스크용 부자재: 없음";
+    }
+</script>
+    
+    <!-- 오른쪽 상단에 파란색 반투명 글씨로 made by OCT_내부지원 표시 (기존 코드 수정/삭제 없이 추가) -->
+    <div class="made-by">
+  made by OCT_내부지원
+</div>
+    
+  </body>
 </html>
