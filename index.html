@@ -240,12 +240,19 @@
               <h3>결제용 구성</h3>
 
               <!-- ✅ 포스기 옆에 브라켓 수량 입력 추가 -->
-              <div class="form-group">
-                <label>포스기:</label>
-                <input type="number" id="pay_pos" value="0" />
-                <label class="inline-label">브라켓:</label>
-                <input type="number" id="pay_pos_bracket_qty" value="0" class="small-input" />
-              </div>
+<div class="form-group">
+  <label>15.6 인치 포스기:</label>
+  <input type="number" id="pay_pos_156" value="0" />
+  <label class="inline-label">브라켓(15.6):</label>
+  <input type="number" id="pay_pos_156_bracket_qty" value="0" class="small-input" />
+</div>
+
+<div class="form-group">
+  <label>15인치 포스기:</label>
+  <input type="number" id="pay_pos_15" value="0" />
+  <label class="inline-label">브라켓(15):</label>
+  <input type="number" id="pay_pos_15_bracket_qty" value="0" class="small-input" />
+</div>
 
               <div class="form-group">
                 <label>태블릿:</label>
@@ -415,12 +422,19 @@
           <h3>주문용 구성</h3>
 
           <!-- ✅ 포스기 옆에 브라켓 수량 입력 추가 -->
-          <div class="form-group">
-            <label>포스기:</label>
-            <input type="number" id="order_pos" value="0" />
-            <label class="inline-label">브라켓:</label>
-            <input type="number" id="order_pos_bracket_qty" value="0" class="small-input" />
-          </div>
+<div class="form-group">
+  <label>15.6 인치 포스기:</label>
+  <input type="number" id="pay_pos_156" value="0" />
+  <label class="inline-label">브라켓(15.6):</label>
+  <input type="number" id="pay_pos_156_bracket_qty" value="0" class="small-input" />
+</div>
+
+<div class="form-group">
+  <label>15인치 포스기:</label>
+  <input type="number" id="pay_pos_15" value="0" />
+  <label class="inline-label">브라켓(15):</label>
+  <input type="number" id="pay_pos_15_bracket_qty" value="0" class="small-input" />
+</div>
 
           <div class="form-group">
             <label>태블릿:</label>
@@ -564,11 +578,12 @@
       // 부자재 매핑
       const accessoryMapping = {
         pay: {
-          포스기: "LAN cable",
-          태블릿: "태블릿 거치대, 액정필름",
+          "15.6인치 포스기": "LAN cable",
+          "15인치 포스기": "LAN cable",
+          "태블릿": "태블릿 거치대, 액정필름",
           "프론트(W)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
           "프론트(B)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
-          터미널: "RJ9 to RJ9, 영수증2봉",
+          "터미널": "RJ9 to RJ9, 영수증2봉",
           "유선프린터(W)(영수용)": "CROSS GENDER, 영수증2봉",
           "유선프린터(B)(영수용)": "CROSS GENDER, 영수증2봉",
           "유선프린터(W)(주방용)": "영수증2봉",
@@ -590,8 +605,9 @@
           영수증2봉: "",
         },
         order: {
-          포스기: "LAN cable",
-          태블릿: "태블릿 거치대, 액정필름",
+          "15.6인치 포스기": "LAN cable",
+          "15인치 포스기": "LAN cable",
+          "태블릿": "태블릿 거치대, 액정필름",
           "유선프린터(W)": "영수증2봉",
           "유선프린터(B)": "영수증2봉",
           "TS-400(블루투스)(W)프린터": "영수증2봉",
@@ -619,11 +635,12 @@
 
       const itemCodeMapping = {
         // 장비 품번
-        포스기: "TOSSPOSEDGE1560",
-        태블릿: "TABIDEA11",
+        "15.6인치 포스기": "TOSSPOSEDGE1560",
+        "15인치 포스기": "POSN2504G",
+        "태블릿": "TABIDEA11",
         "프론트(W)": "TOSSFR02WH",
         "프론트(B)": "TOSSFR02BK",
-        터미널: "TOSSTR01",
+        "터미널": "TOSSTR01",
         "유선프린터(W)": "PRCPP3000WH",
         "유선프린터(B)": "PRCPP3000BK",
         "TS-400(블루투스)(W)프린터": "PRTS400WH",
@@ -644,7 +661,7 @@
         "배리어프리 IMU KIOSK E타입 데스크형": "KIOSKT6BE",
         "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 스탠드형": "KIOSKT6BD",
         "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 데스크형": "KIOSKT6BD",
-        SP420QN: "KISMPSP420QN",
+        "SP420QN": "KISMPSP420QN",
         "DD-MP2000": "DAOUMPMP2000",
         "SPD-800KS": "KSNETMPSPD800KS",
         "NK-2500QN": "NICEMPNK2500QN",
@@ -671,7 +688,8 @@
         "POP 2종 & QR & 리플렛": "SMSET",
         "KOVAN BRD": "SM110",
         "3M LAN cable": "SM080",
-        "포스기 브라켓": "품번없음",
+        "브라켓(15.6)": "품번없음",
+        "브라켓(15)": "SM074",
       };
 
       // 각 구역의 선택된 장비 및 부자재 요약 함수
@@ -947,6 +965,7 @@
     <div class="made-by">made by OCT_내부지원</div>
   </body>
 </html>
+
 
 
 
