@@ -60,7 +60,6 @@
       .tab-content.active {
         display: block;
       }
-      /* 헤더 스타일 */
       h3 {
         font-size: 22px;
         font-weight: 700;
@@ -140,8 +139,8 @@
         background-color: #0064ff;
       }
       .action-buttons .reset-btn {
-        background-color: #f44336; /* 빨간색 배경 */
-        color: white; /* 흰색 텍스트 */
+        background-color: #f44336;
+        color: white;
         border: none;
         border-radius: 8px;
         padding: 10px 20px;
@@ -150,15 +149,12 @@
         cursor: pointer;
       }
       .action-buttons .reset-btn:hover {
-        background-color: darkred; /* 마우스 오버 시 어두운 빨간색 */
+        background-color: darkred;
       }
 
-      /* 모든 h4 요소의 기본 margin을 조정 (예시: 상하 0.5em) */
       h4 {
         margin: 0.3em 0;
       }
-
-      /* disclaimer 클래스가 붙은 h4 요소 */
       #output-summary h4.disclaimer {
         margin-top: 0.2em;
         font-size: 0.8em;
@@ -169,14 +165,12 @@
         text-align: center;
         margin-bottom: 20px;
       }
-
       .logo img {
-        width: 120px !important; /* 원하는 크기로 고정 (예: 120px) */
+        width: 120px !important;
         height: auto;
         display: block;
         margin: 0 auto;
       }
-
       .logo-text {
         font-size: 24px;
         font-weight: bold;
@@ -187,11 +181,10 @@
         position: fixed;
         top: 10px;
         right: 20px;
-        font-size: 15px; /* 필요에 따라 크기 조절 */
+        font-size: 15px;
         color: #0064ff;
-        z-index: 1000; /* 다른 요소 위에 보이도록 */
+        z-index: 1000;
       }
-      /* 결제존 탭 내부 flex 컨테이너: 좌측(결제존 구성) / 우측(PC/노트북 구성) */
       .flex-container {
         display: flex;
         gap: 20px;
@@ -203,8 +196,6 @@
         display: flex;
         flex-direction: column;
       }
-
-      /* ✅ 포스기 브라켓 수량 입력칸 조금 작게 */
       .small-input {
         width: 80px !important;
       }
@@ -239,20 +230,19 @@
             <div class="left-col">
               <h3>결제용 구성</h3>
 
-              <!-- ✅ 포스기 옆에 브라켓 수량 입력 추가 -->
-<div class="form-group">
-  <label>15.6인치 포스기:</label>
-  <input type="number" id="pay_pos_156" value="0" />
-  <label class="inline-label">브라켓(15.6):</label>
-  <input type="number" id="pay_pos_156_bracket_qty" value="0" class="small-input" />
-</div>
+              <div class="form-group">
+                <label>15.6인치 포스기:</label>
+                <input type="number" id="pay_pos_156" value="0" />
+                <label class="inline-label">브라켓(15.6):</label>
+                <input type="number" id="pay_pos_156_bracket_qty" value="0" class="small-input" />
+              </div>
 
-<div class="form-group">
-  <label>15인치 포스기:</label>
-  <input type="number" id="pay_pos_15" value="0" />
-  <label class="inline-label">브라켓(15):</label>
-  <input type="number" id="pay_pos_15_bracket_qty" value="0" class="small-input" />
-</div>
+              <div class="form-group">
+                <label>15인치 포스기:</label>
+                <input type="number" id="pay_pos_15" value="0" />
+                <label class="inline-label">브라켓(15):</label>
+                <input type="number" id="pay_pos_15_bracket_qty" value="0" class="small-input" />
+              </div>
 
               <div class="form-group">
                 <label>태블릿:</label>
@@ -302,7 +292,7 @@
                 <label>TS-400(WIFI)(B)프린터:</label>
                 <input type="number" id="pay_printer_toss_b" value="0" />
               </div>
-              <!-- 추가: 결제용 기기 변경 및 추가 (왼쪽 컬럼) -->
+
               <div class="form-group">
                 <label>KOVAN-단말기:</label>
                 <input type="number" id="pay_KOVAN" value="0" />
@@ -327,7 +317,7 @@
                 <label>DAOU-단말기:</label>
                 <input type="number" id="pay_daou" value="0" />
               </div>
-              <!-- 금전함 추가 -->
+
               <div class="form-group">
                 <label>금전함 소형(W):</label>
                 <input type="number" id="pay_moneybox_small_w" value="0" />
@@ -346,7 +336,7 @@
               </div>
             </div>
 
-            <!-- 오른쪽 컬럼: PC/노트북 구성 -->
+            <!-- 오른쪽 컬럼 -->
             <div class="right-col">
               <h3>PC/노트북 구성</h3>
               <h4>&lt;핸드sos, 통통통 등 CRM사용 시&gt;</h4>
@@ -421,20 +411,20 @@
         <div id="order" class="tab-content">
           <h3>주문용 구성</h3>
 
-          <!-- ✅ 포스기 옆에 브라켓 수량 입력 추가 -->
-<div class="form-group">
-  <label>15.6인치 포스기:</label>
-  <input type="number" id="pay_pos_156" value="0" />
-  <label class="inline-label">브라켓(15.6):</label>
-  <input type="number" id="order_pos_156_bracket_qty" value="0" class="small-input" />
-</div>
+          <!-- ✅ 여기 중요: order 탭은 order_로 id가 달라야 중복 집계가 안 됨 -->
+          <div class="form-group">
+            <label>15.6인치 포스기:</label>
+            <input type="number" id="order_pos_156" value="0" />
+            <label class="inline-label">브라켓(15.6):</label>
+            <input type="number" id="order_pos_156_bracket_qty" value="0" class="small-input" />
+          </div>
 
-<div class="form-group">
-  <label>15인치 포스기:</label>
-  <input type="number" id="pay_pos_15" value="0" />
-  <label class="inline-label">브라켓(15):</label>
-  <input type="number" id="order_pos_15_bracket_qty" value="0" class="small-input" />
-</div>
+          <div class="form-group">
+            <label>15인치 포스기:</label>
+            <input type="number" id="order_pos_15" value="0" />
+            <label class="inline-label">브라켓(15):</label>
+            <input type="number" id="order_pos_15_bracket_qty" value="0" class="small-input" />
+          </div>
 
           <div class="form-group">
             <label>태블릿:</label>
@@ -580,10 +570,10 @@
         pay: {
           "15.6인치 포스기": "LAN cable",
           "15인치 포스기": "LAN cable",
-          "태블릿": "태블릿 거치대, 액정필름",
+          태블릿: "태블릿 거치대, 액정필름",
           "프론트(W)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
           "프론트(B)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
-          "터미널": "RJ9 to RJ9, 영수증2봉",
+          터미널: "RJ9 to RJ9, 영수증2봉",
           "유선프린터(W)(영수용)": "CROSS GENDER, 영수증2봉",
           "유선프린터(B)(영수용)": "CROSS GENDER, 영수증2봉",
           "유선프린터(W)(주방용)": "영수증2봉",
@@ -593,7 +583,8 @@
           "TS-400(WIFI)(W)프린터": "영수증2봉",
           "TS-400(WIFI)(B)프린터": "영수증2봉",
           "KOVAN-단말기": "LAN cable, 프론트-CAT cable(B), KOVAN BRD, 영수증2봉",
-          "KSNET-단말기": "LAN cable, 프론트-CAT cable(KSNET), CROSS GENDER, KSNET BRD(Y자), 영수증2봉",
+          "KSNET-단말기":
+            "LAN cable, 프론트-CAT cable(KSNET), CROSS GENDER, KSNET BRD(Y자), 영수증2봉",
           "NICE-단말기": "LAN cable, 프론트-CAT cable(A), NICE 신형 BRD, 영수증2봉",
           "KIS-단말기": "LAN cable, 프론트-CAT cable(A), KIS BRD, 영수증2봉",
           "KPN-단말기": "LAN cable, 프론트-CAT cable(A), KPN BRD, 영수증2봉",
@@ -607,7 +598,7 @@
         order: {
           "15.6인치 포스기": "LAN cable",
           "15인치 포스기": "LAN cable",
-          "태블릿": "태블릿 거치대, 액정필름",
+          태블릿: "태블릿 거치대, 액정필름",
           "유선프린터(W)": "영수증2봉",
           "유선프린터(B)": "영수증2봉",
           "TS-400(블루투스)(W)프린터": "영수증2봉",
@@ -637,10 +628,10 @@
         // 장비 품번
         "15.6인치 포스기": "TOSSPOSEDGE1560",
         "15인치 포스기": "POSN2504G",
-        "태블릿": "TABIDEA11",
+        태블릿: "TABIDEA11",
         "프론트(W)": "TOSSFR02WH",
         "프론트(B)": "TOSSFR02BK",
-        "터미널": "TOSSTR01",
+        터미널: "TOSSTR01",
         "유선프린터(W)": "PRCPP3000WH",
         "유선프린터(B)": "PRCPP3000BK",
         "TS-400(블루투스)(W)프린터": "PRTS400WH",
@@ -661,7 +652,7 @@
         "배리어프리 IMU KIOSK E타입 데스크형": "KIOSKT6BE",
         "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 스탠드형": "KIOSKT6BD",
         "배리어프리 IMU KIOSK D(KIS, DAOU, KSNET)타입 데스크형": "KIOSKT6BD",
-        "SP420QN": "KISMPSP420QN",
+        SP420QN: "KISMPSP420QN",
         "DD-MP2000": "DAOUMPMP2000",
         "SPD-800KS": "KSNETMPSPD800KS",
         "NK-2500QN": "NICEMPNK2500QN",
@@ -688,20 +679,28 @@
         "POP 2종 & QR & 리플렛": "SMSET",
         "KOVAN BRD": "SM110",
         "3M LAN cable": "SM080",
-        "브라켓(15.6)": "품번없음",
+        // ✅ 브라켓 품번
+        "브라켓(15.6)": "SM999",
         "브라켓(15)": "SM074",
       };
 
-      // 각 구역의 선택된 장비 및 부자재 요약 함수
       function summarizeZone(prefix, label, isForSummary) {
-        const ids = Array.from(document.querySelectorAll(`#${prefix} input`)).map((el) => el.id);
+        // ✅ (중요) id로 다시 찾지 말고, 실제 input 요소를 그대로 사용해야 중복 id가 있어도 중복 집계가 안 됨
+        const inputs = Array.from(document.querySelectorAll(`#${prefix} input`));
         const parts = [];
-        let accessories = [];
+        const accessories = [];
         const mapping = accessoryMapping[prefix] || {};
 
-        ids.forEach((id) => {
-          const el = document.getElementById(id);
-          if (!el) return;
+        // ✅ 브라켓 입력칸 id → 부자재명
+        const bracketIdToName = {
+          pay_pos_156_bracket_qty: "브라켓(15.6)",
+          pay_pos_15_bracket_qty: "브라켓(15)",
+          order_pos_156_bracket_qty: "브라켓(15.6)",
+          order_pos_15_bracket_qty: "브라켓(15)",
+        };
+
+        inputs.forEach((el) => {
+          const id = el.id;
 
           // 결제용 체크박스 세트 로직
           if (el.type === "checkbox" && prefix === "pay") {
@@ -714,6 +713,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KSNET-단말기", count: 1 });
+              return;
             } else if (id === "pay_hand2" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -723,6 +723,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "NICE-단말기", count: 1 });
+              return;
             } else if (id === "pay_hand3" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -732,6 +733,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KIS-단말기", count: 1 });
+              return;
             } else if (id === "pay_hand4" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -741,6 +743,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KPN-단말기", count: 1 });
+              return;
             } else if (id === "pay_hand5" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -750,6 +753,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "DAOU-단말기", count: 1 });
+              return;
             } else if (id === "pay_hand6" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -759,6 +763,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KOVAN-단말기", count: 1 });
+              return;
             } else if (id === "pay_del1" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -768,6 +773,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KSNET-단말기", count: 1 });
+              return;
             } else if (id === "pay_del2" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -776,6 +782,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "NICE-단말기", count: 1 });
+              return;
             } else if (id === "pay_del3" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -784,6 +791,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KIS-단말기", count: 1 });
+              return;
             } else if (id === "pay_del4" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -792,6 +800,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KPN-단말기", count: 1 });
+              return;
             } else if (id === "pay_del5" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -800,6 +809,7 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "DAOU-단말기", count: 1 });
+              return;
             } else if (id === "pay_del6" && el.checked) {
               accessories.push({ name: "LAN cable", count: 1 });
               accessories.push({ name: "RJ9 to RS232", count: 1 });
@@ -808,47 +818,49 @@
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "KOVAN-단말기", count: 1 });
+              return;
             } else if (id === "pay_del7" && el.checked) {
               accessories.push({ name: "RJ9 to RS232", count: 1 });
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "유선프린터(W)", count: 1 });
+              return;
             } else if (id === "pay_nope" && el.checked) {
               accessories.push({ name: "RJ9 to RS232", count: 1 });
               accessories.push({ name: "CROSS GENDER", count: 1 });
               accessories.push({ name: "영수증2봉", count: 1 });
               parts.push({ name: "프론트(W)", count: 1 });
               parts.push({ name: "유선프린터(W)", count: 1 });
+              return;
             }
-          } else if (el.type === "number") {
-// ✅ 브라켓 수량 입력칸은 "부자재"로만 집계하고, 장비(parts)에는 넣지 않음
-const bracketIdToName = {
-  pay_pos_156_bracket_qty: "브라켓(15.6)",
-  pay_pos_15_bracket_qty: "브라켓(15)",
-  order_pos_156_bracket_qty: "브라켓(15.6)",
-  order_pos_15_bracket_qty: "브라켓(15)",
-};
+            return;
+          }
 
-if (bracketIdToName[id]) {
-  const bracketQty = parseInt(el.value || "0", 10);
-  if (bracketQty > 0) {
-    accessories.push({ name: bracketIdToName[id], count: bracketQty });
-  }
-  return; // 여기서 끝
+          // 숫자 입력 처리
+          if (el.type === "number") {
+            // ✅ 브라켓은 부자재로만 집계
+            if (bracketIdToName[id]) {
+              const bracketQty = parseInt(el.value || "0", 10);
+              if (bracketQty > 0) {
+                accessories.push({ name: bracketIdToName[id], count: bracketQty });
+              }
+              return;
             }
 
             const value = parseInt(el.value || "0", 10);
-            if (value > 0) {
-              const name = el.previousElementSibling.textContent.replace(":", "").trim();
-              parts.push({ name: name, count: value });
+            if (value <= 0) return;
 
-              if (mapping[name] && mapping[name].trim() !== "") {
-                const accItems = mapping[name].split(",");
-                accItems.forEach((item) => {
-                  const accName = item.trim();
-                  accessories.push({ name: accName, count: value });
-                });
-              }
+            const prev = el.previousElementSibling;
+            if (!prev) return;
+
+            const name = prev.textContent.replace(":", "").trim();
+            parts.push({ name, count: value });
+
+            if (mapping[name] && mapping[name].trim() !== "") {
+              mapping[name].split(",").forEach((item) => {
+                const accName = item.trim();
+                if (accName) accessories.push({ name: accName, count: value });
+              });
             }
           }
         });
@@ -865,6 +877,7 @@ if (bracketIdToName[id]) {
         } else {
           document.getElementById(`accessories-${prefix}`).innerText = "부자재가 계산되지 않았습니다.";
         }
+
         return isForSummary ? { parts, accessories } : [];
       }
 
@@ -888,48 +901,34 @@ if (bracketIdToName[id]) {
         });
         document.getElementById("summary-content").innerText = equipmentSummary;
 
-        let aggregatedAccessories = [];
+        const aggregatedAccessories = [];
         zones.forEach((z) => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
           zoneData.accessories.forEach((item) => {
             const exist = aggregatedAccessories.find((acc) => acc.name === item.name);
-            if (exist) {
-              exist.count += item.count;
-            } else {
-              aggregatedAccessories.push({ name: item.name, count: item.count });
-            }
+            if (exist) exist.count += item.count;
+            else aggregatedAccessories.push({ name: item.name, count: item.count });
           });
         });
         document.getElementById("cable-summary-content").innerText = aggregatedAccessories.length
           ? aggregatedAccessories.map((item) => `${item.name} ${item.count}EA`).join(", ")
           : "부자재 종류가 없습니다.";
 
-        let aggregatedEquipment = [];
+        const aggregatedEquipment = [];
         zones.forEach((z) => {
           const zoneData = summarizeZone(z.prefix, z.label, z.isForSummary);
           zoneData.parts.forEach((item) => {
             let normalizedName = item.name;
 
-            if (normalizedName.startsWith("유선프린터(W)")) {
-              normalizedName = "유선프린터(W)";
-            } else if (normalizedName.startsWith("유선프린터(B)")) {
-              normalizedName = "유선프린터(B)";
-            }
+            if (normalizedName.startsWith("유선프린터(W)")) normalizedName = "유선프린터(W)";
+            else if (normalizedName.startsWith("유선프린터(B)")) normalizedName = "유선프린터(B)";
 
-            if (z.prefix === "kiosk") {
-              normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "").trim();
-            }
-
-            if (item.name.includes("+") || item.name.includes(",")) {
-              normalizedName = item.name;
-            }
+            if (z.prefix === "kiosk") normalizedName = normalizedName.replace(/\s*\([^)]*\)/g, "").trim();
+            if (item.name.includes("+") || item.name.includes(",")) normalizedName = item.name;
 
             const exist = aggregatedEquipment.find((eq) => eq.name === normalizedName);
-            if (exist) {
-              exist.count += item.count;
-            } else {
-              aggregatedEquipment.push({ name: normalizedName, count: item.count });
-            }
+            if (exist) exist.count += item.count;
+            else aggregatedEquipment.push({ name: normalizedName, count: item.count });
           });
         });
 
@@ -948,11 +947,8 @@ if (bracketIdToName[id]) {
 
       function resetAll() {
         document.querySelectorAll("input[type='number'], input[type='checkbox']").forEach((input) => {
-          if (input.type === "checkbox") {
-            input.checked = false;
-          } else {
-            input.value = 0;
-          }
+          if (input.type === "checkbox") input.checked = false;
+          else input.value = 0;
         });
         document.getElementById("summary-content").innerText = "장비가 선택되지 않았습니다.";
         document.getElementById("cable-summary-content").innerText = "아직 계산된 부자재가 없습니다.";
@@ -968,15 +964,6 @@ if (bracketIdToName[id]) {
       }
     </script>
 
-    <!-- 오른쪽 상단에 파란색 반투명 글씨로 made by OCT_내부지원 표시 -->
     <div class="made-by">made by OCT_내부지원</div>
   </body>
 </html>
-
-
-
-
-
-
-
-
