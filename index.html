@@ -232,18 +232,23 @@
 
               <div class="form-group">
                 <label>15.6인치 포스기(EDGE):</label>
-                <input type="number" id="pay_pos_156" value="0" />
-                <label class="inline-label">브라켓(15.6):</label>
-                <input type="number" id="pay_pos_156_bracket_qty" value="0" class="small-input" />
+                <input type="number" id="pay_pos_EDGE" value="0" />
+                <label class="inline-label">브라켓(EDGE):</label>
+                <input type="number" id="pay_pos_EDGE_bracket_qty" value="0" class="small-input" />
               </div>
 
               <div class="form-group">
-                <label>15인치 포스기:</label>
+                <label>15인치 포스기(APEXA):</label>
                 <input type="number" id="pay_pos_15" value="0" />
-                <label class="inline-label">브라켓(15):</label>
-                <input type="number" id="pay_pos_15_bracket_qty" value="0" class="small-input" />
+                <label class="inline-label">브라켓(APEXA):</label>
+                <input type="number" id="pay_pos_APEXA_bracket_qty" value="0" class="small-input" />
               </div>
-
+              
+              <div class="form-group">
+                <label>벽걸이 포스기(브라켓 포함):</label>
+                <input type="number" id="pay_pos_250" value="0" />
+              </div>
+              
               <div class="form-group">
                 <label>태블릿:</label>
                 <input type="number" id="pay_tablet" value="0" />
@@ -412,20 +417,25 @@
           <h3>주문용 구성</h3>
 
           <!-- ✅ 여기 중요: order 탭은 order_로 id가 달라야 중복 집계가 안 됨 -->
-          <div class="form-group">
-            <label>15.6인치 포스기(IMU):</label>
-            <input type="number" id="order_pos_156" value="0" />
-            <label class="inline-label">브라켓(15.6):</label>
-            <input type="number" id="order_pos_156_bracket_qty" value="0" class="small-input" />
-          </div>
+              <div class="form-group">
+                <label>15.6인치 포스기(EDGE):</label>
+                <input type="number" id="order_pos_EDGE" value="0" />
+                <label class="inline-label">브라켓(EDGE):</label>
+                <input type="number" id="order_pos_EDGE_bracket_qty" value="0" class="small-input" />
+              </div>
 
-          <div class="form-group">
-            <label>15인치 포스기:</label>
-            <input type="number" id="order_pos_15" value="0" />
-            <label class="inline-label">브라켓(15):</label>
-            <input type="number" id="order_pos_15_bracket_qty" value="0" class="small-input" />
-          </div>
-
+              <div class="form-group">
+                <label>15인치 포스기(APEXA):</label>
+                <input type="number" id="order_pos_15" value="0" />
+                <label class="inline-label">브라켓(APEXA):</label>
+                <input type="number" id="order_pos_APEXA_bracket_qty" value="0" class="small-input" />
+              </div>
+              
+              <div class="form-group">
+                <label>벽걸이 포스기(브라켓 포함):</label>
+                <input type="number" id="order_pos_250" value="0" />
+              </div>          
+          
           <div class="form-group">
             <label>태블릿:</label>
             <input type="number" id="order_tablet" value="0" />
@@ -569,7 +579,8 @@
       const accessoryMapping = {
         pay: {
           "15.6인치 포스기(EDGE)": "LAN cable",
-          "15인치 포스기": "LAN cable",
+          "15인치 포스기(APEXA)": "LAN cable",
+          "벽걸이 포스기(브라켓 포함)": "LAN cable, 브라켓(E250)",            
           "태블릿": "태블릿 거치대, 액정필름",
           "프론트(W)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
           "프론트(B)": "RJ9 to RS232, POP 2종 & QR & 리플렛",
@@ -596,7 +607,8 @@
         },
         order: {
           "15.6인치 포스기(EDGE)": "LAN cable",
-          "15인치 포스기": "LAN cable",
+          "15인치 포스기(APEXA)": "LAN cable",
+          "벽걸이 포스기(브라켓 포함)": "LAN cable, 브라켓(E250)",
           "태블릿": "태블릿 거치대, 액정필름",
           "유선프린터(W)": "영수증2봉",
           "유선프린터(B)": "영수증2봉",
@@ -626,7 +638,8 @@
       const itemCodeMapping = {
         // 장비 품번
         "15.6인치 포스기(EDGE)": "TOSSPOSEDGE1560",
-        "15인치 포스기": "TOSSPOSAPEXA15",
+        "15인치 포스기(APEXA)": "TOSSPOSAPEXA15",
+        "벽걸이 포스기(브라켓 포함)": "LGPOSE250K",        
         "태블릿": "TABIDEA11",
         "프론트(W)": "TOSSFR02WH",
         "프론트(B)": "TOSSFR02BK",
@@ -679,8 +692,9 @@
         "KOVAN BRD": "SM110",
         "3M LAN cable": "SM080",
         // ✅ 브라켓 품번
-        "브라켓(15.6)": "품번없음",
-        "브라켓(15)": "SM074",
+        "브라켓(EDGE)": "품번없음",
+        "브라켓(APEXA)": "품번없음",        
+        "브라켓(E250)": "SM074",
       };
 
       function summarizeZone(prefix, label, isForSummary) {
@@ -692,10 +706,10 @@
 
         // ✅ 브라켓 입력칸 id → 부자재명
         const bracketIdToName = {
-          pay_pos_156_bracket_qty: "브라켓(15.6)",
-          pay_pos_15_bracket_qty: "브라켓(15)",
-          order_pos_156_bracket_qty: "브라켓(15.6)",
-          order_pos_15_bracket_qty: "브라켓(15)",
+          pay_pos_EDGE_bracket_qty: "브라켓(EDGE)",
+          pay_pos_APEXA_bracket_qty: "브라켓(apexa)",
+          order_pos_EDGE_bracket_qty: "브라켓(EDGE)",
+          order_pos_APEXA_bracket_qty: "브라켓(APEXA)",
         };
 
         inputs.forEach((el) => {
@@ -966,4 +980,3 @@
     <div class="made-by">made by OCT_내부지원</div>
   </body>
 </html>
-
